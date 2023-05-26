@@ -34,12 +34,14 @@
   <a href="#usage">Usage</a> &nbsp;|&nbsp;
   <a href="#available-apis">Available APIs</a> &nbsp;|&nbsp;
   <a href="#contributing">Contributing</a> &nbsp;|&nbsp;
-  <a href="#license">License</a> 
+  <a href="#license">License</a>
 </p>
 
-Aries Cloud Controller Python is a client library written in Python for interacting with an [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) instance. It is generated based on the OpenAPI definition provided by ACA-Py, giving a fully-typed rich API for interacting the cloud agent.
+Aries Cloud Controller Python is a client library, written in Python, for interacting with an instance of [Aries Cloud Agent Python](https://github.com/hyperledger/aries-cloudagent-python) (ACA-Py). It is generated based on the OpenAPI definition provided by ACA-Py, offering a fully-typed and comprehensive API for interacting with the cloud agent.
 
-Each Cloud Controller version maps to a specific ACA-Py version, which is outlined in the table below. Although not strictly adhered to in the past, a new ACA-Py version will result in a new Minor version bump for the Cloud Controller, as there are often times breaking changes.
+Furthermore, the library supports integration with FastAPI to streamline the creation of robust and scalable API services. FastAPI can help handle requests asynchronously, offering high performance even with high traffic, making Aries Cloud Controller Python an optimal choice for large-scale applications.
+
+Each version of Aries Cloud Controller corresponds to a specific ACA-Py version, as outlined in the table below.
 
 | Aries Cloud Controller Version | Aries Cloud Agent Python Version |
 | ------------------------------ | -------------------------------- |
@@ -50,17 +52,18 @@ Each Cloud Controller version maps to a specific ACA-Py version, which is outlin
 
 ## Features
 
-Aries Cloud Controller Python is a fully featured client for interacting with ACA-Py.
+Aries Cloud Controller Python offers a fully featured client for interacting with ACA-Py. It provides:
 
-- Fully Typed wrapper around Aries Cloud Agent Python
-- Supports latest ACA-Py version (0.8.0)
-- Client is auto generated based on OpenAPI definitions, allowing us to keep up to date with new releases.
-- Supports multi-tenant APIs and authentication
-- Async API
+- Fully typed wrapper around Aries Cloud Agent Python
+- Compatibility with the latest ACA-Py version (0.8.0)
+- Auto generation based on OpenAPI definitions, ensuring alignment with new releases
+- Support for multi-tenant APIs and authentication
+- Asynchronous API
+- Integration with FastAPI for high-performance API services
 
 ## Usage
 
-Aries Cloud Controller Python is published to PyPi and can be installed using pip:
+Aries Cloud Controller Python is published on PyPi and can be installed using pip:
 
 ```sh
 pip install aries-cloudcontroller
@@ -77,9 +80,9 @@ client = AcaPyClient(
 )
 ```
 
-**Admin insecure mode**
+#### Admin insecure mode
 
-If you are running ACA-Py with the admin insecure flag and don't have the API key, you must set the `admin_insecure` property:
+If you are running ACA-Py with the admin insecure flag and don't have an API key, you must set the `admin_insecure` property:
 
 ```python
 client = AcaPyClient(
@@ -89,9 +92,9 @@ client = AcaPyClient(
 )
 ```
 
-**Multitenancy**
+#### Multitenancy
 
-To provision the agent in the context of specific tenant of the agent, the `tenant_jwt` property must be set:
+To provision the agent in the context of a specific tenant of the agent, set the `tenant_jwt` property:
 
 ```python
 client = AcaPyClient(
@@ -102,9 +105,9 @@ client = AcaPyClient(
 
 ### Interacting with the client
 
-Once you have the client set up, you're ready to interact with it. Because the API is fully typed, the best way to know what is available is by looking at the ACA-Py swagger UI, and the available properties on the client.
+Once the client is set up, you're ready to interact with it. As the API is fully typed, the best way to discover available operations is by exploring the ACA-Py swagger UI, or the properties on the client.
 
-For example to create and receive an invitation the following methods can be called:
+For example, to create and receive an invitation, call the following methods:
 
 ```python
 invitation = await client.connection.create_invitation(
@@ -116,7 +119,7 @@ connection = await client.connection.receive_invitation(body=result.invitation)
 
 ## Available APIs
 
-Currently the following top-level APIs are available in the client. Each api maps to the topics as used by the ACA-Py swagger UI.
+The following top-level APIs are currently available in the client. Each API maps to the topics used by the ACA-Py swagger UI:
 
 - `action_menu`
 - `basicmessage`
@@ -147,7 +150,7 @@ Currently the following top-level APIs are available in the client. Each api map
 
 ## Contributing
 
-If you would like to contribute to the framework, please read [CONTRIBUTING](/CONTRIBUTING.md) guidelines. These documents will provide more information to get you started!
+If you're interested in contributing to this project, please read the [CONTRIBUTING](/CONTRIBUTING.md) guidelines. These documents will provide more information to help you get started!
 
 ## License
 
