@@ -93,6 +93,7 @@ tags:
 - description: did resolver interface.
   externalDocs:
     description: Specification
+    url: https://github.com/hyperledger/aries-rfcs/tree/070b325ef4a55005d79d03eb629f0399f3a0dfc4/features/0124-did-resolution-protocol
   name: resolver
 - description: Revocation registry management
   externalDocs:
