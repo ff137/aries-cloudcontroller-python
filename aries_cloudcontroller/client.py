@@ -3,7 +3,7 @@ from typing import Dict
 
 import uplink
 
-from aries_cloudcontroller.api import (
+from aries_cloudcontroller.apis import (
     ActionMenuApi,
     BasicmessageApi,
     ConnectionApi,

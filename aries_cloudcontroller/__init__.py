@@ -1,6 +1,6 @@
 from aries_cloudcontroller.acapy_client import AcaPyClient
 
-from aries_cloudcontroller.api import (
+from aries_cloudcontroller.apis import (
     ActionMenuApi,
     BasicmessageApi,
     ConnectionApi,
@@ -29,7 +29,7 @@ from aries_cloudcontroller.api import (
     WalletApi,
 )
 
-from aries_cloudcontroller.model import (
+from aries_cloudcontroller.models import (
     AMLRecord,
     ActionMenuFetchResult,
     AdminConfig,
