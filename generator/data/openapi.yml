@@ -263,15 +263,15 @@ paths:
         name: state
         schema:
           enum:
-          - error
-          - active
           - start
-          - init
-          - abandoned
+          - error
           - response
-          - completed
-          - invitation
           - request
+          - abandoned
+          - init
+          - invitation
+          - active
+          - completed
           type: string
       - description: Their DID
         in: query
