@@ -5,11 +5,20 @@ CONTAINER_RUNTIME=${CONTAINER_RUNTIME:-docker}
 
 CONTAINER_NAME=openapi-converter
 
-${CONTAINER_RUNTIME} run --rm -d -p 8080:8080 --name ${CONTAINER_NAME} swaggerapi/swagger-converter:v1.0.2
-trap '${CONTAINER_RUNTIME} stop ${CONTAINER_NAME}' EXIT
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8080)" != "200" ]];do
-    echo "Converter not yet ready..."
-    sleep 1
-done
+OPENAPI_GENERATOR_CLI="openapitools/openapi-generator-cli:v6.6.0"
 
-curl -X POST http://localhost:8080/api/convert -H "Content-Type: application/json" -H "Accept: application/yaml" --data-binary "@../data/swagger.json" -o ../data/openapi.yml
+HOST_SHARED_DIR="$(pwd)/../data"
+OPEN_API_MOUNT="/local"
+
+${CONTAINER_RUNTIME} run --rm -v "${HOST_SHARED_DIR}:${OPEN_API_MOUNT}" \
+    --name ${CONTAINER_NAME} ${OPENAPI_GENERATOR_CLI} \
+    generate -i "${OPEN_API_MOUNT}/swagger.json" \
+    -g openapi-yaml \
+    -o "${OPEN_API_MOUNT}" \
+    --skip-validate-spec
+# the script will stop and remove the container after it's done due to the --rm flag
+
+# move the generated OpenAPI file to your data directory and remove the generated directory
+mv "${HOST_SHARED_DIR}/openapi/openapi.yaml" "${HOST_SHARED_DIR}/openapi.yml"
+rm -rf "${HOST_SHARED_DIR}/openapi"
+rm -rf "${HOST_SHARED_DIR}/.openapi-generator"
