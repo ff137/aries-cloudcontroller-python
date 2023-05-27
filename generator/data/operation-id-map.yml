@@ -66,6 +66,9 @@ paths:
   /credential-definitions/{cred_def_id}:
     get:
       operationId: get_cred_def
+  /credential-definitions/{cred_def_id}/write_record:
+    post:
+      operationId: write_cred_def
   /credential/mime-types/{credential_id}:
     get:
       operationId: get_credential_mime_types
@@ -100,12 +103,24 @@ paths:
   /didexchange/{conn_id}/accept-request:
     post:
       operationId: accept_request
-  /features:
+  /discover-features-2.0/queries:
+    get:
+      operationId: get_features_2_0
+  /discover-features-2.0/records:
+    get:
+      operationId: get_feature_records_2_0
+  /discover-features/query:
     get:
       operationId: get_features
+  /discover-features/records:
+    get:
+      operationId: get_feature_records
   /issue-credential-2.0/create:
     post:
       operationId: create_credential
+  /issue-credential-2.0/create-offer:
+    post:
+      operationId: create_credential_offer
   /issue-credential-2.0/records:
     get:
       operationId: get_records
@@ -194,6 +209,12 @@ paths:
   /ledger/get-nym-role:
     get:
       operationId: get_did_nym_role
+  /ledger/multiple/config:
+    get:
+      operationId: get_multiple_ledger_config
+  /ledger/multiple/get-write-ledger:
+    get:
+      operationId: get_write_ledger
   /ledger/register-nym:
     post:
       operationId: register_nym
@@ -237,6 +258,9 @@ paths:
   /mediation/requests/{mediation_id}/grant:
     post:
       operationId: grant_mediation_request
+  /mediation/update-keylist/{conn_id}:
+    post:
+      operationId: update_keylist_by_conn_id
   /mediation/{mediation_id}/default-mediator:
     put:
       operationId: set_default_mediator
@@ -351,6 +375,9 @@ paths:
   /revocation/registries/created:
     get:
       operationId: get_created_registries
+  /revocation/registry/delete-tails-file:
+    delete:
+      operationId: delete_tails_file
   /revocation/registry/{rev_reg_id}:
     get:
       operationId: get_registry
@@ -362,9 +389,18 @@ paths:
   /revocation/registry/{rev_reg_id}/entry:
     post:
       operationId: publish_rev_reg_entry
+  /revocation/registry/{rev_reg_id}/fix-revocation-entry-state:
+    put:
+      operationId: update_revocation_state
   /revocation/registry/{rev_reg_id}/issued:
     get:
       operationId: get_registry_issued_credentials_count
+  /revocation/registry/{rev_reg_id}/issued/details:
+    get:
+      operationId: get_cred_details
+  /revocation/registry/{rev_reg_id}/issued/indy_recs:
+    get:
+      operationId: get_indy_recs
   /revocation/registry/{rev_reg_id}/set-state:
     patch:
       operationId: set_registry_state
