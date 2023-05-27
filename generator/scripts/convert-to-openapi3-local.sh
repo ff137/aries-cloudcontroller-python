@@ -22,3 +22,5 @@ ${CONTAINER_RUNTIME} run --rm -v "${HOST_SHARED_DIR}:${OPEN_API_MOUNT}" \
 mv "${HOST_SHARED_DIR}/openapi/openapi.yaml" "${HOST_SHARED_DIR}/openapi.yml"
 rm -rf "${HOST_SHARED_DIR}/openapi"
 rm -rf "${HOST_SHARED_DIR}/.openapi-generator"
+rm -rf "${HOST_SHARED_DIR}/README.md"
+rm -rf "${HOST_SHARED_DIR}/.openapi-generator-ignore"
