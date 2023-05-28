@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class RevRegWalletUpdatedResult(BaseModel):
@@ -16,17 +15,14 @@ class RevRegWalletUpdatedResult(BaseModel):
     Do not edit the class manually.
 
     RevRegWalletUpdatedResult - a model defined in OpenAPI
-        accum_calculated: Calculated accumulator for phantom revocations [Optional].
-        accum_fixed: Applied ledger transaction to fix revocations [Optional].
-        rev_reg_delta: Indy revocation registry delta [Optional].
+
+        accum_calculated: The accum_calculated of this RevRegWalletUpdatedResult [Optional].
+        accum_fixed: The accum_fixed of this RevRegWalletUpdatedResult [Optional].
+        rev_reg_delta: The rev_reg_delta of this RevRegWalletUpdatedResult [Optional].
     """
 
-    accum_calculated: Optional[Dict[str, Any]] = None
-    accum_fixed: Optional[Dict[str, Any]] = None
-    rev_reg_delta: Optional[Dict[str, Any]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    accum_calculated: Optional[Dict[str, Any]] = Field(alias="accum_calculated", default=None)
+    accum_fixed: Optional[Dict[str, Any]] = Field(alias="accum_fixed", default=None)
+    rev_reg_delta: Optional[Dict[str, Any]] = Field(alias="rev_reg_delta", default=None)
 
 RevRegWalletUpdatedResult.update_forward_refs()

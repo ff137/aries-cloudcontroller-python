@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.model_schema import ModelSchema
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.schema_send_result_schema import SchemaSendResultSchema
 
 
 class SchemaSendResult(BaseModel):
@@ -17,24 +16,17 @@ class SchemaSendResult(BaseModel):
     Do not edit the class manually.
 
     SchemaSendResult - a model defined in OpenAPI
-        schema_id: Schema identifier.
-        schema_: Schema definition [Optional].
+
+        schema: The schema of this SchemaSendResult [Optional].
+        schema_id: The schema_id of this SchemaSendResult.
     """
 
-    schema_id: str
-    schema_: Optional[ModelSchema] = Field(None, alias="schema")
+    schema: Optional[SchemaSendResultSchema] = Field(alias="schema", default=None)
+    schema_id: str = Field(alias="schema_id")
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 SchemaSendResult.update_forward_refs()

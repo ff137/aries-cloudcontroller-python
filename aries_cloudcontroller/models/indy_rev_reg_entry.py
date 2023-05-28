@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.indy_rev_reg_entry_value import IndyRevRegEntryValue
 
 
@@ -17,26 +16,17 @@ class IndyRevRegEntry(BaseModel):
     Do not edit the class manually.
 
     IndyRevRegEntry - a model defined in OpenAPI
-        value: Revocation registry entry value [Optional].
-        ver: Version of revocation registry entry [Optional].
+
+        value: The value of this IndyRevRegEntry [Optional].
+        ver: The ver of this IndyRevRegEntry [Optional].
     """
 
-    value: Optional[IndyRevRegEntryValue] = None
-    ver: Optional[str] = None
+    value: Optional[IndyRevRegEntryValue] = Field(alias="value", default=None)
+    ver: Optional[str] = Field(alias="ver", default=None)
 
     @validator("ver")
     def ver_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of ver does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyRevRegEntry.update_forward_refs()

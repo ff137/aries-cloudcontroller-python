@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.dif_field import DIFField
 from aries_cloudcontroller.models.dif_holder import DIFHolder
 
@@ -18,25 +17,22 @@ class Constraints(BaseModel):
     Do not edit the class manually.
 
     Constraints - a model defined in OpenAPI
+
         fields: The fields of this Constraints [Optional].
         is_holder: The is_holder of this Constraints [Optional].
-        limit_disclosure: LimitDisclosure [Optional].
+        limit_disclosure: The limit_disclosure of this Constraints [Optional].
         status_active: The status_active of this Constraints [Optional].
         status_revoked: The status_revoked of this Constraints [Optional].
         status_suspended: The status_suspended of this Constraints [Optional].
-        subject_is_issuer: SubjectIsIssuer [Optional].
+        subject_is_issuer: The subject_is_issuer of this Constraints [Optional].
     """
 
-    fields: Optional[List[DIFField]] = None
-    is_holder: Optional[List[DIFHolder]] = None
-    limit_disclosure: Optional[str] = None
-    status_active: Optional[Literal["required", "allowed", "disallowed"]] = None
-    status_revoked: Optional[Literal["required", "allowed", "disallowed"]] = None
-    status_suspended: Optional[Literal["required", "allowed", "disallowed"]] = None
-    subject_is_issuer: Optional[Literal["required", "preferred"]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    fields: Optional[List[DIFField]] = Field(alias="fields", default=None)
+    is_holder: Optional[List[DIFHolder]] = Field(alias="is_holder", default=None)
+    limit_disclosure: Optional[str] = Field(alias="limit_disclosure", default=None)
+    status_active: Optional[str] = Field(alias="status_active", default=None)
+    status_revoked: Optional[str] = Field(alias="status_revoked", default=None)
+    status_suspended: Optional[str] = Field(alias="status_suspended", default=None)
+    subject_is_issuer: Optional[str] = Field(alias="subject_is_issuer", default=None)
 
 Constraints.update_forward_refs()

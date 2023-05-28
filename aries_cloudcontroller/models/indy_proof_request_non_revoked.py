@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class IndyProofRequestNonRevoked(BaseModel):
@@ -16,59 +15,32 @@ class IndyProofRequestNonRevoked(BaseModel):
     Do not edit the class manually.
 
     IndyProofRequestNonRevoked - a model defined in OpenAPI
-        from_: Earliest time of interest in non-revocation interval [Optional].
-        to: Latest time of interest in non-revocation interval [Optional].
+
+        _from: The _from of this IndyProofRequestNonRevoked [Optional].
+        to: The to of this IndyProofRequestNonRevoked [Optional].
     """
 
-    from_: Optional[int] = Field(None, alias="from")
-    to: Optional[int] = None
+    _from: Optional[int] = Field(alias="from", default=None)
+    to: Optional[int] = Field(alias="to", default=None)
 
-    @validator("from_")
-    def from__max(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value > 18446744073709551615:
-            raise ValueError(
-                f"from_ must be less than 18446744073709551615, currently {value}"
-            )
+    @validator("_from")
+    def _from_max(cls, value):
+        assert value <= -1
         return value
 
-    @validator("from_")
-    def from__min(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value < 0:
-            raise ValueError(f"from_ must be greater than 0, currently {value}")
+    @validator("_from")
+    def _from_min(cls, value):
+        assert value >= 0
         return value
 
     @validator("to")
     def to_max(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value > 18446744073709551615:
-            raise ValueError(
-                f"to must be less than 18446744073709551615, currently {value}"
-            )
+        assert value <= -1
         return value
 
     @validator("to")
     def to_min(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value < 0:
-            raise ValueError(f"to must be greater than 0, currently {value}")
+        assert value >= 0
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyProofRequestNonRevoked.update_forward_refs()

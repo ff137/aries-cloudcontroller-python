@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class CreateInvitationRequest(BaseModel):
@@ -16,36 +15,25 @@ class CreateInvitationRequest(BaseModel):
     Do not edit the class manually.
 
     CreateInvitationRequest - a model defined in OpenAPI
-        mediation_id: Identifier for active mediation record to be used [Optional].
-        metadata: Optional metadata to attach to the connection created with the invitation [Optional].
-        my_label: Optional label for connection invitation [Optional].
-        recipient_keys: List of recipient keys [Optional].
-        routing_keys: List of routing keys [Optional].
-        service_endpoint: Connection endpoint [Optional].
+
+        mediation_id: The mediation_id of this CreateInvitationRequest [Optional].
+        metadata: The metadata of this CreateInvitationRequest [Optional].
+        my_label: The my_label of this CreateInvitationRequest [Optional].
+        recipient_keys: The recipient_keys of this CreateInvitationRequest [Optional].
+        routing_keys: The routing_keys of this CreateInvitationRequest [Optional].
+        service_endpoint: The service_endpoint of this CreateInvitationRequest [Optional].
     """
 
-    mediation_id: Optional[str] = None
-    metadata: Optional[Dict[str, Any]] = None
-    my_label: Optional[str] = None
-    recipient_keys: Optional[List[str]] = None
-    routing_keys: Optional[List[str]] = None
-    service_endpoint: Optional[str] = None
+    mediation_id: Optional[str] = Field(alias="mediation_id", default=None)
+    metadata: Optional[Dict[str, Any]] = Field(alias="metadata", default=None)
+    my_label: Optional[str] = Field(alias="my_label", default=None)
+    recipient_keys: Optional[List[str]] = Field(alias="recipient_keys", default=None)
+    routing_keys: Optional[List[str]] = Field(alias="routing_keys", default=None)
+    service_endpoint: Optional[str] = Field(alias="service_endpoint", default=None)
 
     @validator("mediation_id")
     def mediation_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of mediation_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 CreateInvitationRequest.update_forward_refs()

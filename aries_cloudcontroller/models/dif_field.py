@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.filter import Filter
 
 
@@ -17,21 +16,18 @@ class DIFField(BaseModel):
     Do not edit the class manually.
 
     DIFField - a model defined in OpenAPI
+
         filter: The filter of this DIFField [Optional].
-        id: ID [Optional].
+        id: The id of this DIFField [Optional].
         path: The path of this DIFField [Optional].
-        predicate: Preference [Optional].
-        purpose: Purpose [Optional].
+        predicate: The predicate of this DIFField [Optional].
+        purpose: The purpose of this DIFField [Optional].
     """
 
-    filter: Optional[Filter] = None
-    id: Optional[str] = None
-    path: Optional[List[str]] = None
-    predicate: Optional[Literal["required", "preferred"]] = None
-    purpose: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    filter: Optional[Filter] = Field(alias="filter", default=None)
+    id: Optional[str] = Field(alias="id", default=None)
+    path: Optional[List[str]] = Field(alias="path", default=None)
+    predicate: Optional[str] = Field(alias="predicate", default=None)
+    purpose: Optional[str] = Field(alias="purpose", default=None)
 
 DIFField.update_forward_refs()

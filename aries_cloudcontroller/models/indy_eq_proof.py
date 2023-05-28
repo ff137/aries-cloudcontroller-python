@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class IndyEQProof(BaseModel):
@@ -16,6 +15,7 @@ class IndyEQProof(BaseModel):
     Do not edit the class manually.
 
     IndyEQProof - a model defined in OpenAPI
+
         a_prime: The a_prime of this IndyEQProof [Optional].
         e: The e of this IndyEQProof [Optional].
         m: The m of this IndyEQProof [Optional].
@@ -24,61 +24,31 @@ class IndyEQProof(BaseModel):
         v: The v of this IndyEQProof [Optional].
     """
 
-    a_prime: Optional[str] = None
-    e: Optional[str] = None
-    m: Optional[Dict[str, str]] = None
-    m2: Optional[str] = None
-    revealed_attrs: Optional[Dict[str, str]] = None
-    v: Optional[str] = None
+    a_prime: Optional[str] = Field(alias="a_prime", default=None)
+    e: Optional[str] = Field(alias="e", default=None)
+    m: Optional[Dict[str, str]] = Field(alias="m", default=None)
+    m2: Optional[str] = Field(alias="m2", default=None)
+    revealed_attrs: Optional[Dict[str, str]] = Field(alias="revealed_attrs", default=None)
+    v: Optional[str] = Field(alias="v", default=None)
 
     @validator("a_prime")
     def a_prime_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9]*$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of a_prime does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[0-9]*$", value)
         return value
 
     @validator("e")
     def e_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9]*$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of e does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^[0-9]*$", value)
         return value
 
     @validator("m2")
     def m2_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9]*$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of m2 does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^[0-9]*$", value)
         return value
 
     @validator("v")
     def v_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9]*$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of v does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^[0-9]*$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyEQProof.update_forward_refs()

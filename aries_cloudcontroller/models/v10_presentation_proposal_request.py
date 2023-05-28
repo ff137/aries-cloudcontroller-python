@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.indy_pres_preview import IndyPresPreview
 
 
@@ -17,21 +16,18 @@ class V10PresentationProposalRequest(BaseModel):
     Do not edit the class manually.
 
     V10PresentationProposalRequest - a model defined in OpenAPI
-        connection_id: Connection identifier.
+
+        auto_present: The auto_present of this V10PresentationProposalRequest [Optional].
+        comment: The comment of this V10PresentationProposalRequest [Optional].
+        connection_id: The connection_id of this V10PresentationProposalRequest.
         presentation_proposal: The presentation_proposal of this V10PresentationProposalRequest.
-        auto_present: Whether to respond automatically to presentation requests, building and presenting requested proof [Optional].
-        comment: Human-readable comment [Optional].
-        trace: Whether to trace event (default false) [Optional].
+        trace: The trace of this V10PresentationProposalRequest [Optional].
     """
 
-    connection_id: str
-    presentation_proposal: IndyPresPreview
-    auto_present: Optional[bool] = None
-    comment: Optional[str] = None
-    trace: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    auto_present: Optional[bool] = Field(alias="auto_present", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    connection_id: str = Field(alias="connection_id")
+    presentation_proposal: IndyPresPreview = Field(alias="presentation_proposal")
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
 V10PresentationProposalRequest.update_forward_refs()

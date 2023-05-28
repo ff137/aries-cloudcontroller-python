@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.v20_cred_filter_ld_proof import V20CredFilterLDProof
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v20_cred_request_free_filter import V20CredRequestFreeFilter
 
 
 class V20CredRequestFree(BaseModel):
@@ -17,23 +16,20 @@ class V20CredRequestFree(BaseModel):
     Do not edit the class manually.
 
     V20CredRequestFree - a model defined in OpenAPI
-        connection_id: Connection identifier.
-        filter: Credential specification criteria by format.
-        auto_remove: Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting) [Optional].
-        comment: Human-readable comment [Optional].
-        holder_did: Holder DID to substitute for the credentialSubject.id [Optional].
-        trace: Whether to trace event (default false) [Optional].
+
+        auto_remove: The auto_remove of this V20CredRequestFree [Optional].
+        comment: The comment of this V20CredRequestFree [Optional].
+        connection_id: The connection_id of this V20CredRequestFree.
+        filter: The filter of this V20CredRequestFree.
+        holder_did: The holder_did of this V20CredRequestFree [Optional].
+        trace: The trace of this V20CredRequestFree [Optional].
     """
 
-    connection_id: str
-    filter: V20CredFilterLDProof
-    auto_remove: Optional[bool] = None
-    comment: Optional[str] = None
-    holder_did: Optional[str] = None
-    trace: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    auto_remove: Optional[bool] = Field(alias="auto_remove", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    connection_id: str = Field(alias="connection_id")
+    filter: V20CredRequestFreeFilter = Field(alias="filter")
+    holder_did: Optional[str] = Field(alias="holder_did", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
 V20CredRequestFree.update_forward_refs()

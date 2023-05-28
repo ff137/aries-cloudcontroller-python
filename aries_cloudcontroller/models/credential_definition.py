@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.cred_def_value import CredDefValue
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.credential_definition_value import CredentialDefinitionValue
 
 
 class CredentialDefinition(BaseModel):
@@ -17,45 +16,30 @@ class CredentialDefinition(BaseModel):
     Do not edit the class manually.
 
     CredentialDefinition - a model defined in OpenAPI
-        id: Credential definition identifier [Optional].
-        schema_id: Schema identifier within credential definition identifier [Optional].
-        tag: Tag within credential definition identifier [Optional].
-        type: Signature type: CL for Camenisch-Lysyanskaya [Optional].
-        value: Credential definition primary and revocation values [Optional].
-        ver: Node protocol version [Optional].
+
+        id: The id of this CredentialDefinition [Optional].
+        schema_id: The schema_id of this CredentialDefinition [Optional].
+        tag: The tag of this CredentialDefinition [Optional].
+        type: The type of this CredentialDefinition [Optional].
+        value: The value of this CredentialDefinition [Optional].
+        ver: The ver of this CredentialDefinition [Optional].
     """
 
-    id: Optional[str] = None
-    schema_id: Optional[str] = Field(None, alias="schemaId")
-    tag: Optional[str] = None
-    type: Optional[Literal["CL"]] = None
-    value: Optional[CredDefValue] = None
-    ver: Optional[str] = None
+    id: Optional[str] = Field(alias="id", default=None)
+    schema_id: Optional[str] = Field(alias="schemaId", default=None)
+    tag: Optional[str] = Field(alias="tag", default=None)
+    type: Optional[Dict[str, Any]] = Field(alias="type", default=None)
+    value: Optional[CredentialDefinitionValue] = Field(alias="value", default=None)
+    ver: Optional[str] = Field(alias="ver", default=None)
 
     @validator("id")
     def id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of id does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("ver")
     def ver_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of ver does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 CredentialDefinition.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.cred_def_value_primary import CredDefValuePrimary
 from aries_cloudcontroller.models.cred_def_value_revocation import CredDefValueRevocation
 
@@ -18,15 +17,12 @@ class CredDefValue(BaseModel):
     Do not edit the class manually.
 
     CredDefValue - a model defined in OpenAPI
-        primary: Primary value for credential definition [Optional].
-        revocation: Revocation value for credential definition [Optional].
+
+        primary: The primary of this CredDefValue [Optional].
+        revocation: The revocation of this CredDefValue [Optional].
     """
 
-    primary: Optional[CredDefValuePrimary] = None
-    revocation: Optional[CredDefValueRevocation] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    primary: Optional[CredDefValuePrimary] = Field(alias="primary", default=None)
+    revocation: Optional[CredDefValueRevocation] = Field(alias="revocation", default=None)
 
 CredDefValue.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class CredDefValueRevocation(BaseModel):
@@ -16,6 +15,7 @@ class CredDefValueRevocation(BaseModel):
     Do not edit the class manually.
 
     CredDefValueRevocation - a model defined in OpenAPI
+
         g: The g of this CredDefValueRevocation [Optional].
         g_dash: The g_dash of this CredDefValueRevocation [Optional].
         h: The h of this CredDefValueRevocation [Optional].
@@ -29,20 +29,16 @@ class CredDefValueRevocation(BaseModel):
         y: The y of this CredDefValueRevocation [Optional].
     """
 
-    g: Optional[str] = None
-    g_dash: Optional[str] = None
-    h: Optional[str] = None
-    h0: Optional[str] = None
-    h1: Optional[str] = None
-    h2: Optional[str] = None
-    h_cap: Optional[str] = None
-    htilde: Optional[str] = None
-    pk: Optional[str] = None
-    u: Optional[str] = None
-    y: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    g: Optional[str] = Field(alias="g", default=None)
+    g_dash: Optional[str] = Field(alias="g_dash", default=None)
+    h: Optional[str] = Field(alias="h", default=None)
+    h0: Optional[str] = Field(alias="h0", default=None)
+    h1: Optional[str] = Field(alias="h1", default=None)
+    h2: Optional[str] = Field(alias="h2", default=None)
+    h_cap: Optional[str] = Field(alias="h_cap", default=None)
+    htilde: Optional[str] = Field(alias="htilde", default=None)
+    pk: Optional[str] = Field(alias="pk", default=None)
+    u: Optional[str] = Field(alias="u", default=None)
+    y: Optional[str] = Field(alias="y", default=None)
 
 CredDefValueRevocation.update_forward_refs()

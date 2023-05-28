@@ -1,16 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_key_correctness_proof import (
-    IndyKeyCorrectnessProof,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_cred_abstract_key_correctness_proof import IndyCredAbstractKeyCorrectnessProof
 
 
 class IndyCredAbstract(BaseModel):
@@ -19,46 +16,31 @@ class IndyCredAbstract(BaseModel):
     Do not edit the class manually.
 
     IndyCredAbstract - a model defined in OpenAPI
-        cred_def_id: Credential definition identifier.
-        key_correctness_proof: Key correctness proof.
-        nonce: Nonce in credential abstract.
-        schema_id: Schema identifier.
+
+        cred_def_id: The cred_def_id of this IndyCredAbstract.
+        key_correctness_proof: The key_correctness_proof of this IndyCredAbstract.
+        nonce: The nonce of this IndyCredAbstract.
+        schema_id: The schema_id of this IndyCredAbstract.
     """
 
-    cred_def_id: str
-    key_correctness_proof: IndyKeyCorrectnessProof
-    nonce: str
-    schema_id: str
+    cred_def_id: str = Field(alias="cred_def_id")
+    key_correctness_proof: IndyCredAbstractKeyCorrectnessProof = Field(alias="key_correctness_proof")
+    nonce: str = Field(alias="nonce")
+    schema_id: str = Field(alias="schema_id")
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("nonce")
     def nonce_pattern(cls, value):
-        pattern = r"^[0-9]*$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of nonce does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[0-9]*$", value)
         return value
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyCredAbstract.update_forward_refs()

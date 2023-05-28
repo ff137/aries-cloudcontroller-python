@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.signed_doc import SignedDoc
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.verify_request_doc import VerifyRequestDoc
 
 
 class VerifyRequest(BaseModel):
@@ -17,15 +16,12 @@ class VerifyRequest(BaseModel):
     Do not edit the class manually.
 
     VerifyRequest - a model defined in OpenAPI
-        doc: Signed document.
-        verkey: Verkey to use for doc verification [Optional].
+
+        doc: The doc of this VerifyRequest.
+        verkey: The verkey of this VerifyRequest [Optional].
     """
 
-    doc: SignedDoc
-    verkey: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    doc: VerifyRequestDoc = Field(alias="doc")
+    verkey: Optional[str] = Field(alias="verkey", default=None)
 
 VerifyRequest.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.schema_input_descriptor import SchemaInputDescriptor
 
 
@@ -17,15 +16,12 @@ class SchemasInputDescriptorFilter(BaseModel):
     Do not edit the class manually.
 
     SchemasInputDescriptorFilter - a model defined in OpenAPI
-        oneof_filter: oneOf [Optional].
+
+        oneof_filter: The oneof_filter of this SchemasInputDescriptorFilter [Optional].
         uri_groups: The uri_groups of this SchemasInputDescriptorFilter [Optional].
     """
 
-    oneof_filter: Optional[bool] = None
-    uri_groups: Optional[List[List[SchemaInputDescriptor]]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    oneof_filter: Optional[bool] = Field(alias="oneof_filter", default=None)
+    uri_groups: Optional[List[List[SchemaInputDescriptor]]] = Field(alias="uri_groups", default=None)
 
 SchemasInputDescriptorFilter.update_forward_refs()

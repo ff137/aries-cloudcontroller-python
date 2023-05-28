@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class SchemasCreatedResult(BaseModel):
@@ -16,13 +15,10 @@ class SchemasCreatedResult(BaseModel):
     Do not edit the class manually.
 
     SchemasCreatedResult - a model defined in OpenAPI
+
         schema_ids: The schema_ids of this SchemasCreatedResult [Optional].
     """
 
-    schema_ids: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    schema_ids: Optional[List[str]] = Field(alias="schema_ids", default=None)
 
 SchemasCreatedResult.update_forward_refs()

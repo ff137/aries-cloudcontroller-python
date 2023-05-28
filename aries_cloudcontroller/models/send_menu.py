@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.menu_json import MenuJson
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.send_menu_menu import SendMenuMenu
 
 
 class SendMenu(BaseModel):
@@ -17,13 +16,10 @@ class SendMenu(BaseModel):
     Do not edit the class manually.
 
     SendMenu - a model defined in OpenAPI
-        menu: Menu to send to connection.
+
+        menu: The menu of this SendMenu.
     """
 
-    menu: MenuJson
-
-    class Config:
-        allow_population_by_field_name = True
-
+    menu: SendMenuMenu = Field(alias="menu")
 
 SendMenu.update_forward_refs()

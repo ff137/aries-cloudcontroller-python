@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class SignatureOptions(BaseModel):
@@ -16,21 +15,18 @@ class SignatureOptions(BaseModel):
     Do not edit the class manually.
 
     SignatureOptions - a model defined in OpenAPI
-        proof_purpose: The proof_purpose of this SignatureOptions.
-        verification_method: The verification_method of this SignatureOptions.
+
         challenge: The challenge of this SignatureOptions [Optional].
         domain: The domain of this SignatureOptions [Optional].
+        proof_purpose: The proof_purpose of this SignatureOptions.
         type: The type of this SignatureOptions [Optional].
+        verification_method: The verification_method of this SignatureOptions.
     """
 
-    proof_purpose: str = Field(..., alias="proofPurpose")
-    verification_method: str = Field(..., alias="verificationMethod")
-    challenge: Optional[str] = None
-    domain: Optional[str] = None
-    type: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    challenge: Optional[str] = Field(alias="challenge", default=None)
+    domain: Optional[str] = Field(alias="domain", default=None)
+    proof_purpose: str = Field(alias="proofPurpose")
+    type: Optional[str] = Field(alias="type", default=None)
+    verification_method: str = Field(alias="verificationMethod")
 
 SignatureOptions.update_forward_refs()

@@ -1,15 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.dif_pres_spec import DIFPresSpec
-from aries_cloudcontroller.models.indy_pres_spec import IndyPresSpec
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v20_pres_spec_by_format_request_dif import V20PresSpecByFormatRequestDif
+from aries_cloudcontroller.models.v20_pres_spec_by_format_request_indy import V20PresSpecByFormatRequestIndy
 
 
 class V20PresSpecByFormatRequest(BaseModel):
@@ -18,17 +17,14 @@ class V20PresSpecByFormatRequest(BaseModel):
     Do not edit the class manually.
 
     V20PresSpecByFormatRequest - a model defined in OpenAPI
-        dif: Optional Presentation specification for DIF, overrides the PresentionExchange record&#39;s PresRequest [Optional].
-        indy: Presentation specification for indy [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
+
+        dif: The dif of this V20PresSpecByFormatRequest [Optional].
+        indy: The indy of this V20PresSpecByFormatRequest [Optional].
+        trace: The trace of this V20PresSpecByFormatRequest [Optional].
     """
 
-    dif: Optional[DIFPresSpec] = None
-    indy: Optional[IndyPresSpec] = None
-    trace: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    dif: Optional[V20PresSpecByFormatRequestDif] = Field(alias="dif", default=None)
+    indy: Optional[V20PresSpecByFormatRequestIndy] = Field(alias="indy", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
 V20PresSpecByFormatRequest.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class IndyGEProofPred(BaseModel):
@@ -16,17 +15,14 @@ class IndyGEProofPred(BaseModel):
     Do not edit the class manually.
 
     IndyGEProofPred - a model defined in OpenAPI
-        attr_name: Attribute name, indy-canonicalized [Optional].
-        p_type: Predicate type [Optional].
-        value: Predicate threshold value [Optional].
+
+        attr_name: The attr_name of this IndyGEProofPred [Optional].
+        p_type: The p_type of this IndyGEProofPred [Optional].
+        value: The value of this IndyGEProofPred [Optional].
     """
 
-    attr_name: Optional[str] = None
-    p_type: Optional[Literal["LT", "LE", "GE", "GT"]] = None
-    value: Optional[int] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    attr_name: Optional[str] = Field(alias="attr_name", default=None)
+    p_type: Optional[str] = Field(alias="p_type", default=None)
+    value: Optional[int] = Field(alias="value", default=None)
 
 IndyGEProofPred.update_forward_refs()

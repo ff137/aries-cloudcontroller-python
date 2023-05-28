@@ -1,16 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_rev_reg_def_value_public_keys import (
-    IndyRevRegDefValuePublicKeys,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_rev_reg_def_value_public_keys import IndyRevRegDefValuePublicKeys
 
 
 class IndyRevRegDefValue(BaseModel):
@@ -19,50 +16,28 @@ class IndyRevRegDefValue(BaseModel):
     Do not edit the class manually.
 
     IndyRevRegDefValue - a model defined in OpenAPI
-        issuance_type: Issuance type [Optional].
-        max_cred_num: Maximum number of credentials; registry size [Optional].
-        public_keys: Public keys [Optional].
-        tails_hash: Tails hash value [Optional].
-        tails_location: Tails file location [Optional].
+
+        issuance_type: The issuance_type of this IndyRevRegDefValue [Optional].
+        max_cred_num: The max_cred_num of this IndyRevRegDefValue [Optional].
+        public_keys: The public_keys of this IndyRevRegDefValue [Optional].
+        tails_hash: The tails_hash of this IndyRevRegDefValue [Optional].
+        tails_location: The tails_location of this IndyRevRegDefValue [Optional].
     """
 
-    issuance_type: Optional[
-        Literal["ISSUANCE_ON_DEMAND", "ISSUANCE_BY_DEFAULT"]
-    ] = Field(None, alias="issuanceType")
-    max_cred_num: Optional[int] = Field(None, alias="maxCredNum")
-    public_keys: Optional[IndyRevRegDefValuePublicKeys] = Field(
-        None, alias="publicKeys"
-    )
-    tails_hash: Optional[str] = Field(None, alias="tailsHash")
-    tails_location: Optional[str] = Field(None, alias="tailsLocation")
+    issuance_type: Optional[str] = Field(alias="issuanceType", default=None)
+    max_cred_num: Optional[int] = Field(alias="maxCredNum", default=None)
+    public_keys: Optional[IndyRevRegDefValuePublicKeys] = Field(alias="publicKeys", default=None)
+    tails_hash: Optional[str] = Field(alias="tailsHash", default=None)
+    tails_location: Optional[str] = Field(alias="tailsLocation", default=None)
 
     @validator("max_cred_num")
     def max_cred_num_min(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value < 1:
-            raise ValueError(f"max_cred_num must be greater than 1, currently {value}")
+        assert value >= 1
         return value
 
     @validator("tails_hash")
     def tails_hash_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = (
-            r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$"
-        )
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of tails_hash does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyRevRegDefValue.update_forward_refs()

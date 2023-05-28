@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class EndorserInfo(BaseModel):
@@ -16,15 +15,12 @@ class EndorserInfo(BaseModel):
     Do not edit the class manually.
 
     EndorserInfo - a model defined in OpenAPI
-        endorser_did: Endorser DID.
-        endorser_name: Endorser Name [Optional].
+
+        endorser_did: The endorser_did of this EndorserInfo.
+        endorser_name: The endorser_name of this EndorserInfo [Optional].
     """
 
-    endorser_did: str
-    endorser_name: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    endorser_did: str = Field(alias="endorser_did")
+    endorser_name: Optional[str] = Field(alias="endorser_name", default=None)
 
 EndorserInfo.update_forward_refs()

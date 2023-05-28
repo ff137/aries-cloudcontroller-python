@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class KeylistUpdateRule(BaseModel):
@@ -16,24 +15,17 @@ class KeylistUpdateRule(BaseModel):
     Do not edit the class manually.
 
     KeylistUpdateRule - a model defined in OpenAPI
-        action: Action for specific key.
-        recipient_key: Key to remove or add.
+
+        action: The action of this KeylistUpdateRule.
+        recipient_key: The recipient_key of this KeylistUpdateRule.
     """
 
-    action: Literal["add", "remove"]
-    recipient_key: str
+    action: str = Field(alias="action")
+    recipient_key: str = Field(alias="recipient_key")
 
     @validator("recipient_key")
     def recipient_key_pattern(cls, value):
-        pattern = r"^did:key:z[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$|^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of recipient_key does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^did:key:z[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+$|^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 KeylistUpdateRule.update_forward_refs()

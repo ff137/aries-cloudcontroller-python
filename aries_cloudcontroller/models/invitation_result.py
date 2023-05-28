@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.connection_invitation import ConnectionInvitation
 
 
@@ -17,17 +16,14 @@ class InvitationResult(BaseModel):
     Do not edit the class manually.
 
     InvitationResult - a model defined in OpenAPI
-        connection_id: Connection identifier [Optional].
+
+        connection_id: The connection_id of this InvitationResult [Optional].
         invitation: The invitation of this InvitationResult [Optional].
-        invitation_url: Invitation URL [Optional].
+        invitation_url: The invitation_url of this InvitationResult [Optional].
     """
 
-    connection_id: Optional[str] = None
-    invitation: Optional[ConnectionInvitation] = None
-    invitation_url: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    invitation: Optional[ConnectionInvitation] = Field(alias="invitation", default=None)
+    invitation_url: Optional[str] = Field(alias="invitation_url", default=None)
 
 InvitationResult.update_forward_refs()

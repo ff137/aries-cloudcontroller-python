@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.attach_decorator import AttachDecorator
 
 
@@ -17,21 +16,16 @@ class PresentationRequest(BaseModel):
     Do not edit the class manually.
 
     PresentationRequest - a model defined in OpenAPI
+
+        id: The id of this PresentationRequest [Optional].
+        type: The type of this PresentationRequest [Optional].
+        comment: The comment of this PresentationRequest [Optional].
         request_presentationsattach: The request_presentationsattach of this PresentationRequest.
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        comment: Human-readable comment [Optional].
     """
 
-    request_presentationsattach: List[AttachDecorator] = Field(
-        ..., alias="request_presentations~attach"
-    )
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    comment: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    request_presentationsattach: List[AttachDecorator] = Field(alias="request_presentations~attach")
 
 PresentationRequest.update_forward_refs()

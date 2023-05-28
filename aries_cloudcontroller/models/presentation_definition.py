@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.claim_format import ClaimFormat
 from aries_cloudcontroller.models.input_descriptors import InputDescriptors
 from aries_cloudcontroller.models.submission_requirements import SubmissionRequirements
@@ -19,34 +18,25 @@ class PresentationDefinition(BaseModel):
     Do not edit the class manually.
 
     PresentationDefinition - a model defined in OpenAPI
+
         format: The format of this PresentationDefinition [Optional].
-        id: Unique Resource Identifier [Optional].
+        id: The id of this PresentationDefinition [Optional].
         input_descriptors: The input_descriptors of this PresentationDefinition [Optional].
-        name: Human-friendly name that describes what the presentation definition pertains to [Optional].
-        purpose: Describes the purpose for which the Presentation Definition&#39;s inputs are being requested [Optional].
+        name: The name of this PresentationDefinition [Optional].
+        purpose: The purpose of this PresentationDefinition [Optional].
         submission_requirements: The submission_requirements of this PresentationDefinition [Optional].
     """
 
-    format: Optional[ClaimFormat] = None
-    id: Optional[str] = None
-    input_descriptors: Optional[List[InputDescriptors]] = None
-    name: Optional[str] = None
-    purpose: Optional[str] = None
-    submission_requirements: Optional[List[SubmissionRequirements]] = None
+    format: Optional[ClaimFormat] = Field(alias="format", default=None)
+    id: Optional[str] = Field(alias="id", default=None)
+    input_descriptors: Optional[List[InputDescriptors]] = Field(alias="input_descriptors", default=None)
+    name: Optional[str] = Field(alias="name", default=None)
+    purpose: Optional[str] = Field(alias="purpose", default=None)
+    submission_requirements: Optional[List[SubmissionRequirements]] = Field(alias="submission_requirements", default=None)
 
     @validator("id")
     def id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of id does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 PresentationDefinition.update_forward_refs()

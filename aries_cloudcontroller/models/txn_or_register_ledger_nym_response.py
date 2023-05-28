@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.transaction_record import TransactionRecord
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.txn_or_register_ledger_nym_response_txn import TxnOrRegisterLedgerNymResponseTxn
 
 
 class TxnOrRegisterLedgerNymResponse(BaseModel):
@@ -17,15 +16,12 @@ class TxnOrRegisterLedgerNymResponse(BaseModel):
     Do not edit the class manually.
 
     TxnOrRegisterLedgerNymResponse - a model defined in OpenAPI
-        success: Success of nym registration operation [Optional].
-        txn: DID transaction to endorse [Optional].
+
+        success: The success of this TxnOrRegisterLedgerNymResponse [Optional].
+        txn: The txn of this TxnOrRegisterLedgerNymResponse [Optional].
     """
 
-    success: Optional[bool] = None
-    txn: Optional[TransactionRecord] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    success: Optional[bool] = Field(alias="success", default=None)
+    txn: Optional[TxnOrRegisterLedgerNymResponseTxn] = Field(alias="txn", default=None)
 
 TxnOrRegisterLedgerNymResponse.update_forward_refs()

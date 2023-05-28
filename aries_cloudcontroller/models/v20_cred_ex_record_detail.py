@@ -1,18 +1,15 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.v20_cred_ex_record import V20CredExRecord
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v20_cred_ex_record_detail_cred_ex_record import V20CredExRecordDetailCredExRecord
 from aries_cloudcontroller.models.v20_cred_ex_record_indy import V20CredExRecordIndy
-from aries_cloudcontroller.models.v20_cred_ex_record_ld_proof import (
-    V20CredExRecordLDProof,
-)
+from aries_cloudcontroller.models.v20_cred_ex_record_ld_proof import V20CredExRecordLDProof
 
 
 class V20CredExRecordDetail(BaseModel):
@@ -21,17 +18,14 @@ class V20CredExRecordDetail(BaseModel):
     Do not edit the class manually.
 
     V20CredExRecordDetail - a model defined in OpenAPI
-        cred_ex_record: Credential exchange record [Optional].
+
+        cred_ex_record: The cred_ex_record of this V20CredExRecordDetail [Optional].
         indy: The indy of this V20CredExRecordDetail [Optional].
         ld_proof: The ld_proof of this V20CredExRecordDetail [Optional].
     """
 
-    cred_ex_record: Optional[V20CredExRecord] = None
-    indy: Optional[V20CredExRecordIndy] = None
-    ld_proof: Optional[V20CredExRecordLDProof] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    cred_ex_record: Optional[V20CredExRecordDetailCredExRecord] = Field(alias="cred_ex_record", default=None)
+    indy: Optional[V20CredExRecordIndy] = Field(alias="indy", default=None)
+    ld_proof: Optional[V20CredExRecordLDProof] = Field(alias="ld_proof", default=None)
 
 V20CredExRecordDetail.update_forward_refs()

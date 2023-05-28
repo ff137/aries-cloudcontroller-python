@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class SchemaSendRequest(BaseModel):
@@ -16,26 +15,19 @@ class SchemaSendRequest(BaseModel):
     Do not edit the class manually.
 
     SchemaSendRequest - a model defined in OpenAPI
-        attributes: List of schema attributes.
-        schema_name: Schema name.
-        schema_version: Schema version.
+
+        attributes: The attributes of this SchemaSendRequest.
+        schema_name: The schema_name of this SchemaSendRequest.
+        schema_version: The schema_version of this SchemaSendRequest.
     """
 
-    attributes: List[str]
-    schema_name: str
-    schema_version: str
+    attributes: List[str] = Field(alias="attributes")
+    schema_name: str = Field(alias="schema_name")
+    schema_version: str = Field(alias="schema_version")
 
     @validator("schema_version")
     def schema_version_pattern(cls, value):
-        pattern = r"^[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_version does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 SchemaSendRequest.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class MenuFormParam(BaseModel):
@@ -16,23 +15,20 @@ class MenuFormParam(BaseModel):
     Do not edit the class manually.
 
     MenuFormParam - a model defined in OpenAPI
-        name: Menu parameter name.
-        title: Menu parameter title.
-        default: Default parameter value [Optional].
-        description: Additional descriptive text for menu form parameter [Optional].
-        required: Whether parameter is required [Optional].
-        type: Menu form parameter input type [Optional].
+
+        default: The default of this MenuFormParam [Optional].
+        description: The description of this MenuFormParam [Optional].
+        name: The name of this MenuFormParam.
+        required: The required of this MenuFormParam [Optional].
+        title: The title of this MenuFormParam.
+        type: The type of this MenuFormParam [Optional].
     """
 
-    name: str
-    title: str
-    default: Optional[str] = None
-    description: Optional[str] = None
-    required: Optional[bool] = None
-    type: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    default: Optional[str] = Field(alias="default", default=None)
+    description: Optional[str] = Field(alias="description", default=None)
+    name: str = Field(alias="name")
+    required: Optional[bool] = Field(alias="required", default=None)
+    title: str = Field(alias="title")
+    type: Optional[str] = Field(alias="type", default=None)
 
 MenuFormParam.update_forward_refs()

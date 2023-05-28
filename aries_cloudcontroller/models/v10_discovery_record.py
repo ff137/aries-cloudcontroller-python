@@ -1,15 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.disclose import Disclose
-from aries_cloudcontroller.models.query import Query
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v10_discovery_record_disclose import V10DiscoveryRecordDisclose
+from aries_cloudcontroller.models.v10_discovery_record_query_msg import V10DiscoveryRecordQueryMsg
 
 
 class V10DiscoveryRecord(BaseModel):
@@ -18,55 +17,36 @@ class V10DiscoveryRecord(BaseModel):
     Do not edit the class manually.
 
     V10DiscoveryRecord - a model defined in OpenAPI
-        connection_id: Connection identifier [Optional].
-        created_at: Time of record creation [Optional].
-        disclose: Disclose message [Optional].
-        discovery_exchange_id: Credential exchange identifier [Optional].
-        query_msg: Query message [Optional].
-        state: Current record state [Optional].
-        thread_id: Thread identifier [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
-        updated_at: Time of last record update [Optional].
+
+        connection_id: The connection_id of this V10DiscoveryRecord [Optional].
+        created_at: The created_at of this V10DiscoveryRecord [Optional].
+        disclose: The disclose of this V10DiscoveryRecord [Optional].
+        discovery_exchange_id: The discovery_exchange_id of this V10DiscoveryRecord [Optional].
+        query_msg: The query_msg of this V10DiscoveryRecord [Optional].
+        state: The state of this V10DiscoveryRecord [Optional].
+        thread_id: The thread_id of this V10DiscoveryRecord [Optional].
+        trace: The trace of this V10DiscoveryRecord [Optional].
+        updated_at: The updated_at of this V10DiscoveryRecord [Optional].
     """
 
-    connection_id: Optional[str] = None
-    created_at: Optional[str] = None
-    disclose: Optional[Disclose] = None
-    discovery_exchange_id: Optional[str] = None
-    query_msg: Optional[Query] = None
-    state: Optional[str] = None
-    thread_id: Optional[str] = None
-    trace: Optional[bool] = None
-    updated_at: Optional[str] = None
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    disclose: Optional[V10DiscoveryRecordDisclose] = Field(alias="disclose", default=None)
+    discovery_exchange_id: Optional[str] = Field(alias="discovery_exchange_id", default=None)
+    query_msg: Optional[V10DiscoveryRecordQueryMsg] = Field(alias="query_msg", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    thread_id: Optional[str] = Field(alias="thread_id", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 V10DiscoveryRecord.update_forward_refs()

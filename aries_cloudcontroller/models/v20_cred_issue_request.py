@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class V20CredIssueRequest(BaseModel):
@@ -16,13 +15,10 @@ class V20CredIssueRequest(BaseModel):
     Do not edit the class manually.
 
     V20CredIssueRequest - a model defined in OpenAPI
-        comment: Human-readable comment [Optional].
+
+        comment: The comment of this V20CredIssueRequest [Optional].
     """
 
-    comment: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    comment: Optional[str] = Field(alias="comment", default=None)
 
 V20CredIssueRequest.update_forward_refs()

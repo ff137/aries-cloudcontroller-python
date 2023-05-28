@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.menu_option import MenuOption
 
 
@@ -17,19 +16,16 @@ class MenuJson(BaseModel):
     Do not edit the class manually.
 
     MenuJson - a model defined in OpenAPI
-        options: List of menu options.
-        description: Introductory text for the menu [Optional].
-        errormsg: Optional error message to display in menu header [Optional].
-        title: Menu title [Optional].
+
+        description: The description of this MenuJson [Optional].
+        errormsg: The errormsg of this MenuJson [Optional].
+        options: The options of this MenuJson.
+        title: The title of this MenuJson [Optional].
     """
 
-    options: List[MenuOption]
-    description: Optional[str] = None
-    errormsg: Optional[str] = None
-    title: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    description: Optional[str] = Field(alias="description", default=None)
+    errormsg: Optional[str] = Field(alias="errormsg", default=None)
+    options: List[MenuOption] = Field(alias="options")
+    title: Optional[str] = Field(alias="title", default=None)
 
 MenuJson.update_forward_refs()

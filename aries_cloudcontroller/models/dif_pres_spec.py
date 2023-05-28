@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.presentation_definition import PresentationDefinition
 
 
@@ -17,19 +16,16 @@ class DIFPresSpec(BaseModel):
     Do not edit the class manually.
 
     DIFPresSpec - a model defined in OpenAPI
-        issuer_id: Issuer identifier to sign the presentation, if different from current public DID [Optional].
+
+        issuer_id: The issuer_id of this DIFPresSpec [Optional].
         presentation_definition: The presentation_definition of this DIFPresSpec [Optional].
-        record_ids: Mapping of input_descriptor id to list of stored W3C credential record_id [Optional].
-        reveal_doc: reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required [Optional].
+        record_ids: The record_ids of this DIFPresSpec [Optional].
+        reveal_doc: The reveal_doc of this DIFPresSpec [Optional].
     """
 
-    issuer_id: Optional[str] = None
-    presentation_definition: Optional[PresentationDefinition] = None
-    record_ids: Optional[Dict[str, Any]] = None
-    reveal_doc: Optional[Dict[str, Any]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    issuer_id: Optional[str] = Field(alias="issuer_id", default=None)
+    presentation_definition: Optional[PresentationDefinition] = Field(alias="presentation_definition", default=None)
+    record_ids: Optional[Dict[str, Any]] = Field(alias="record_ids", default=None)
+    reveal_doc: Optional[Dict[str, Any]] = Field(alias="reveal_doc", default=None)
 
 DIFPresSpec.update_forward_refs()

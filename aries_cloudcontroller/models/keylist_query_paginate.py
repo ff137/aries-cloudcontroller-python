@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class KeylistQueryPaginate(BaseModel):
@@ -16,15 +15,12 @@ class KeylistQueryPaginate(BaseModel):
     Do not edit the class manually.
 
     KeylistQueryPaginate - a model defined in OpenAPI
-        limit: Limit for keylist query [Optional].
-        offset: Offset value for query [Optional].
+
+        limit: The limit of this KeylistQueryPaginate [Optional].
+        offset: The offset of this KeylistQueryPaginate [Optional].
     """
 
-    limit: Optional[int] = None
-    offset: Optional[int] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    limit: Optional[int] = Field(alias="limit", default=None)
+    offset: Optional[int] = Field(alias="offset", default=None)
 
 KeylistQueryPaginate.update_forward_refs()

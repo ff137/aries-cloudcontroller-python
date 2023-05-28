@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class GetNymRoleResponse(BaseModel):
@@ -16,17 +15,10 @@ class GetNymRoleResponse(BaseModel):
     Do not edit the class manually.
 
     GetNymRoleResponse - a model defined in OpenAPI
-        role: Ledger role [Optional].
+
+        role: The role of this GetNymRoleResponse [Optional].
     """
 
-    role: Optional[
-        Literal[
-            "STEWARD", "TRUSTEE", "ENDORSER", "NETWORK_MONITOR", "USER", "ROLE_REMOVE"
-        ]
-    ] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    role: Optional[str] = Field(alias="role", default=None)
 
 GetNymRoleResponse.update_forward_refs()

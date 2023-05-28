@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.credential_preview import CredentialPreview
 
 
@@ -17,9 +16,10 @@ class CredentialProposal(BaseModel):
     Do not edit the class manually.
 
     CredentialProposal - a model defined in OpenAPI
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        comment: Human-readable comment [Optional].
+
+        id: The id of this CredentialProposal [Optional].
+        type: The type of this CredentialProposal [Optional].
+        comment: The comment of this CredentialProposal [Optional].
         cred_def_id: The cred_def_id of this CredentialProposal [Optional].
         credential_proposal: The credential_proposal of this CredentialProposal [Optional].
         issuer_did: The issuer_did of this CredentialProposal [Optional].
@@ -29,84 +29,40 @@ class CredentialProposal(BaseModel):
         schema_version: The schema_version of this CredentialProposal [Optional].
     """
 
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    comment: Optional[str] = None
-    cred_def_id: Optional[str] = None
-    credential_proposal: Optional[CredentialPreview] = None
-    issuer_did: Optional[str] = None
-    schema_id: Optional[str] = None
-    schema_issuer_did: Optional[str] = None
-    schema_name: Optional[str] = None
-    schema_version: Optional[str] = None
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    cred_def_id: Optional[str] = Field(alias="cred_def_id", default=None)
+    credential_proposal: Optional[CredentialPreview] = Field(alias="credential_proposal", default=None)
+    issuer_did: Optional[str] = Field(alias="issuer_did", default=None)
+    schema_id: Optional[str] = Field(alias="schema_id", default=None)
+    schema_issuer_did: Optional[str] = Field(alias="schema_issuer_did", default=None)
+    schema_name: Optional[str] = Field(alias="schema_name", default=None)
+    schema_version: Optional[str] = Field(alias="schema_version", default=None)
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("issuer_did")
     def issuer_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of issuer_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
 
     @validator("schema_issuer_did")
     def schema_issuer_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_issuer_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("schema_version")
     def schema_version_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_version does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 CredentialProposal.update_forward_refs()

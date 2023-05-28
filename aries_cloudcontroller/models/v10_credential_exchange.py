@@ -1,19 +1,18 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.credential_offer import CredentialOffer
-from aries_cloudcontroller.models.credential_proposal import CredentialProposal
-from aries_cloudcontroller.models.indy_cred_abstract import IndyCredAbstract
-from aries_cloudcontroller.models.indy_cred_info import IndyCredInfo
-from aries_cloudcontroller.models.indy_cred_request import IndyCredRequest
-from aries_cloudcontroller.models.indy_credential import IndyCredential
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v10_credential_exchange_credential import V10CredentialExchangeCredential
+from aries_cloudcontroller.models.v10_credential_exchange_credential_offer import V10CredentialExchangeCredentialOffer
+from aries_cloudcontroller.models.v10_credential_exchange_credential_offer_dict import V10CredentialExchangeCredentialOfferDict
+from aries_cloudcontroller.models.v10_credential_exchange_credential_proposal_dict import V10CredentialExchangeCredentialProposalDict
+from aries_cloudcontroller.models.v10_credential_exchange_credential_request import V10CredentialExchangeCredentialRequest
+from aries_cloudcontroller.models.v10_credential_exchange_raw_credential import V10CredentialExchangeRawCredential
 
 
 class V10CredentialExchange(BaseModel):
@@ -22,115 +21,80 @@ class V10CredentialExchange(BaseModel):
     Do not edit the class manually.
 
     V10CredentialExchange - a model defined in OpenAPI
-        auto_issue: Issuer choice to issue to request in this credential exchange [Optional].
-        auto_offer: Holder choice to accept offer in this credential exchange [Optional].
-        auto_remove: Issuer choice to remove this credential exchange record when complete [Optional].
-        connection_id: Connection identifier [Optional].
-        created_at: Time of record creation [Optional].
-        credential: Credential as stored [Optional].
-        credential_definition_id: Credential definition identifier [Optional].
-        credential_exchange_id: Credential exchange identifier [Optional].
-        credential_id: Credential identifier [Optional].
-        credential_offer: (Indy) credential offer [Optional].
-        credential_offer_dict: Credential offer message [Optional].
-        credential_proposal_dict: Credential proposal message [Optional].
-        credential_request: (Indy) credential request [Optional].
-        credential_request_metadata: (Indy) credential request metadata [Optional].
-        error_msg: Error message [Optional].
-        initiator: Issue-credential exchange initiator: self or external [Optional].
-        parent_thread_id: Parent thread identifier [Optional].
-        raw_credential: Credential as received, prior to storage in holder wallet [Optional].
-        revoc_reg_id: Revocation registry identifier [Optional].
-        revocation_id: Credential identifier within revocation registry [Optional].
-        role: Issue-credential exchange role: holder or issuer [Optional].
-        schema_id: Schema identifier [Optional].
-        state: Issue-credential exchange state [Optional].
-        thread_id: Thread identifier [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
-        updated_at: Time of last record update [Optional].
+
+        auto_issue: The auto_issue of this V10CredentialExchange [Optional].
+        auto_offer: The auto_offer of this V10CredentialExchange [Optional].
+        auto_remove: The auto_remove of this V10CredentialExchange [Optional].
+        connection_id: The connection_id of this V10CredentialExchange [Optional].
+        created_at: The created_at of this V10CredentialExchange [Optional].
+        credential: The credential of this V10CredentialExchange [Optional].
+        credential_definition_id: The credential_definition_id of this V10CredentialExchange [Optional].
+        credential_exchange_id: The credential_exchange_id of this V10CredentialExchange [Optional].
+        credential_id: The credential_id of this V10CredentialExchange [Optional].
+        credential_offer: The credential_offer of this V10CredentialExchange [Optional].
+        credential_offer_dict: The credential_offer_dict of this V10CredentialExchange [Optional].
+        credential_proposal_dict: The credential_proposal_dict of this V10CredentialExchange [Optional].
+        credential_request: The credential_request of this V10CredentialExchange [Optional].
+        credential_request_metadata: The credential_request_metadata of this V10CredentialExchange [Optional].
+        error_msg: The error_msg of this V10CredentialExchange [Optional].
+        initiator: The initiator of this V10CredentialExchange [Optional].
+        parent_thread_id: The parent_thread_id of this V10CredentialExchange [Optional].
+        raw_credential: The raw_credential of this V10CredentialExchange [Optional].
+        revoc_reg_id: The revoc_reg_id of this V10CredentialExchange [Optional].
+        revocation_id: The revocation_id of this V10CredentialExchange [Optional].
+        role: The role of this V10CredentialExchange [Optional].
+        schema_id: The schema_id of this V10CredentialExchange [Optional].
+        state: The state of this V10CredentialExchange [Optional].
+        thread_id: The thread_id of this V10CredentialExchange [Optional].
+        trace: The trace of this V10CredentialExchange [Optional].
+        updated_at: The updated_at of this V10CredentialExchange [Optional].
     """
 
-    auto_issue: Optional[bool] = None
-    auto_offer: Optional[bool] = None
-    auto_remove: Optional[bool] = None
-    connection_id: Optional[str] = None
-    created_at: Optional[str] = None
-    credential: Optional[IndyCredInfo] = None
-    credential_definition_id: Optional[str] = None
-    credential_exchange_id: Optional[str] = None
-    credential_id: Optional[str] = None
-    credential_offer: Optional[IndyCredAbstract] = None
-    credential_offer_dict: Optional[CredentialOffer] = None
-    credential_proposal_dict: Optional[CredentialProposal] = None
-    credential_request: Optional[IndyCredRequest] = None
-    credential_request_metadata: Optional[Dict[str, Any]] = None
-    error_msg: Optional[str] = None
-    initiator: Optional[Literal["self", "external"]] = None
-    parent_thread_id: Optional[str] = None
-    raw_credential: Optional[IndyCredential] = None
-    revoc_reg_id: Optional[str] = None
-    revocation_id: Optional[str] = None
-    role: Optional[Literal["holder", "issuer"]] = None
-    schema_id: Optional[str] = None
-    state: Optional[str] = None
-    thread_id: Optional[str] = None
-    trace: Optional[bool] = None
-    updated_at: Optional[str] = None
+    auto_issue: Optional[bool] = Field(alias="auto_issue", default=None)
+    auto_offer: Optional[bool] = Field(alias="auto_offer", default=None)
+    auto_remove: Optional[bool] = Field(alias="auto_remove", default=None)
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    credential: Optional[V10CredentialExchangeCredential] = Field(alias="credential", default=None)
+    credential_definition_id: Optional[str] = Field(alias="credential_definition_id", default=None)
+    credential_exchange_id: Optional[str] = Field(alias="credential_exchange_id", default=None)
+    credential_id: Optional[str] = Field(alias="credential_id", default=None)
+    credential_offer: Optional[V10CredentialExchangeCredentialOffer] = Field(alias="credential_offer", default=None)
+    credential_offer_dict: Optional[V10CredentialExchangeCredentialOfferDict] = Field(alias="credential_offer_dict", default=None)
+    credential_proposal_dict: Optional[V10CredentialExchangeCredentialProposalDict] = Field(alias="credential_proposal_dict", default=None)
+    credential_request: Optional[V10CredentialExchangeCredentialRequest] = Field(alias="credential_request", default=None)
+    credential_request_metadata: Optional[Dict[str, Any]] = Field(alias="credential_request_metadata", default=None)
+    error_msg: Optional[str] = Field(alias="error_msg", default=None)
+    initiator: Optional[str] = Field(alias="initiator", default=None)
+    parent_thread_id: Optional[str] = Field(alias="parent_thread_id", default=None)
+    raw_credential: Optional[V10CredentialExchangeRawCredential] = Field(alias="raw_credential", default=None)
+    revoc_reg_id: Optional[str] = Field(alias="revoc_reg_id", default=None)
+    revocation_id: Optional[str] = Field(alias="revocation_id", default=None)
+    role: Optional[str] = Field(alias="role", default=None)
+    schema_id: Optional[str] = Field(alias="schema_id", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    thread_id: Optional[str] = Field(alias="thread_id", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("credential_definition_id")
     def credential_definition_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of credential_definition_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 V10CredentialExchange.update_forward_refs()

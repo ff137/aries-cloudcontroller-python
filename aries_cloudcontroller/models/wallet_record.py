@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class WalletRecord(BaseModel):
@@ -16,49 +15,30 @@ class WalletRecord(BaseModel):
     Do not edit the class manually.
 
     WalletRecord - a model defined in OpenAPI
-        key_management_mode: Mode regarding management of wallet key.
-        wallet_id: Wallet record ID.
-        created_at: Time of record creation [Optional].
-        settings: Settings for this wallet. [Optional].
-        state: Current record state [Optional].
-        updated_at: Time of last record update [Optional].
+
+        created_at: The created_at of this WalletRecord [Optional].
+        key_management_mode: The key_management_mode of this WalletRecord.
+        settings: The settings of this WalletRecord [Optional].
+        state: The state of this WalletRecord [Optional].
+        updated_at: The updated_at of this WalletRecord [Optional].
+        wallet_id: The wallet_id of this WalletRecord.
     """
 
-    key_management_mode: Literal["managed", "unmanaged"]
-    wallet_id: str
-    created_at: Optional[str] = None
-    settings: Optional[Dict[str, Any]] = None
-    state: Optional[str] = None
-    updated_at: Optional[str] = None
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    key_management_mode: str = Field(alias="key_management_mode")
+    settings: Optional[Dict[str, Any]] = Field(alias="settings", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
+    wallet_id: str = Field(alias="wallet_id")
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 WalletRecord.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.menu_form_param import MenuFormParam
 
 
@@ -17,19 +16,16 @@ class MenuForm(BaseModel):
     Do not edit the class manually.
 
     MenuForm - a model defined in OpenAPI
-        description: Additional descriptive text for menu form [Optional].
-        params: List of form parameters [Optional].
-        submit_label: Alternative label for form submit button [Optional].
-        title: Menu form title [Optional].
+
+        description: The description of this MenuForm [Optional].
+        params: The params of this MenuForm [Optional].
+        submit_label: The submit_label of this MenuForm [Optional].
+        title: The title of this MenuForm [Optional].
     """
 
-    description: Optional[str] = None
-    params: Optional[List[MenuFormParam]] = None
-    submit_label: Optional[str] = Field(None, alias="submit-label")
-    title: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    description: Optional[str] = Field(alias="description", default=None)
+    params: Optional[List[MenuFormParam]] = Field(alias="params", default=None)
+    submit_label: Optional[str] = Field(alias="submit-label", default=None)
+    title: Optional[str] = Field(alias="title", default=None)
 
 MenuForm.update_forward_refs()

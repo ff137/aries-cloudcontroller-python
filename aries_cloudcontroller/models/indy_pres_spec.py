@@ -1,19 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_requested_creds_requested_attr import (
-    IndyRequestedCredsRequestedAttr,
-)
-from aries_cloudcontroller.models.indy_requested_creds_requested_pred import (
-    IndyRequestedCredsRequestedPred,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_requested_creds_requested_attr import IndyRequestedCredsRequestedAttr
+from aries_cloudcontroller.models.indy_requested_creds_requested_pred import IndyRequestedCredsRequestedPred
 
 
 class IndyPresSpec(BaseModel):
@@ -22,19 +17,16 @@ class IndyPresSpec(BaseModel):
     Do not edit the class manually.
 
     IndyPresSpec - a model defined in OpenAPI
-        requested_attributes: Nested object mapping proof request attribute referents to requested-attribute specifiers.
-        requested_predicates: Nested object mapping proof request predicate referents to requested-predicate specifiers.
-        self_attested_attributes: Self-attested attributes to build into proof.
-        trace: Whether to trace event (default false) [Optional].
+
+        requested_attributes: The requested_attributes of this IndyPresSpec.
+        requested_predicates: The requested_predicates of this IndyPresSpec.
+        self_attested_attributes: The self_attested_attributes of this IndyPresSpec.
+        trace: The trace of this IndyPresSpec [Optional].
     """
 
-    requested_attributes: Dict[str, IndyRequestedCredsRequestedAttr]
-    requested_predicates: Dict[str, IndyRequestedCredsRequestedPred]
-    self_attested_attributes: Dict[str, str]
-    trace: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    requested_attributes: Dict[str, IndyRequestedCredsRequestedAttr] = Field(alias="requested_attributes")
+    requested_predicates: Dict[str, IndyRequestedCredsRequestedPred] = Field(alias="requested_predicates")
+    self_attested_attributes: Dict[str, str] = Field(alias="self_attested_attributes")
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
 IndyPresSpec.update_forward_refs()

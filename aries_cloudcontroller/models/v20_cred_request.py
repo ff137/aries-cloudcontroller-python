@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.attach_decorator import AttachDecorator
 from aries_cloudcontroller.models.v20_cred_format import V20CredFormat
 
@@ -18,21 +17,18 @@ class V20CredRequest(BaseModel):
     Do not edit the class manually.
 
     V20CredRequest - a model defined in OpenAPI
-        formats: Acceptable attachment formats.
-        requestsattach: Request attachments.
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        comment: Human-readable comment [Optional].
+
+        id: The id of this V20CredRequest [Optional].
+        type: The type of this V20CredRequest [Optional].
+        comment: The comment of this V20CredRequest [Optional].
+        formats: The formats of this V20CredRequest.
+        requestsattach: The requestsattach of this V20CredRequest.
     """
 
-    formats: List[V20CredFormat]
-    requestsattach: List[AttachDecorator] = Field(..., alias="requests~attach")
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    comment: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    formats: List[V20CredFormat] = Field(alias="formats")
+    requestsattach: List[AttachDecorator] = Field(alias="requests~attach")
 
 V20CredRequest.update_forward_refs()

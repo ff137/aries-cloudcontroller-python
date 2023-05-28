@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class AdminConfig(BaseModel):
@@ -16,13 +15,10 @@ class AdminConfig(BaseModel):
     Do not edit the class manually.
 
     AdminConfig - a model defined in OpenAPI
-        config: Configuration settings [Optional].
+
+        config: The config of this AdminConfig [Optional].
     """
 
-    config: Optional[Dict[str, Any]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    config: Optional[Dict[str, Any]] = Field(alias="config", default=None)
 
 AdminConfig.update_forward_refs()

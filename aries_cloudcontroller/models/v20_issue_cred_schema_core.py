@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.v20_cred_filter import V20CredFilter
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v20_cred_bound_offer_request_filter import V20CredBoundOfferRequestFilter
 from aries_cloudcontroller.models.v20_cred_preview import V20CredPreview
 
 
@@ -18,21 +17,18 @@ class V20IssueCredSchemaCore(BaseModel):
     Do not edit the class manually.
 
     V20IssueCredSchemaCore - a model defined in OpenAPI
-        filter: Credential specification criteria by format.
-        auto_remove: Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting) [Optional].
-        comment: Human-readable comment [Optional].
+
+        auto_remove: The auto_remove of this V20IssueCredSchemaCore [Optional].
+        comment: The comment of this V20IssueCredSchemaCore [Optional].
         credential_preview: The credential_preview of this V20IssueCredSchemaCore [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
+        filter: The filter of this V20IssueCredSchemaCore.
+        trace: The trace of this V20IssueCredSchemaCore [Optional].
     """
 
-    filter: V20CredFilter
-    auto_remove: Optional[bool] = None
-    comment: Optional[str] = None
-    credential_preview: Optional[V20CredPreview] = None
-    trace: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    auto_remove: Optional[bool] = Field(alias="auto_remove", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    credential_preview: Optional[V20CredPreview] = Field(alias="credential_preview", default=None)
+    filter: V20CredBoundOfferRequestFilter = Field(alias="filter")
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
 V20IssueCredSchemaCore.update_forward_refs()

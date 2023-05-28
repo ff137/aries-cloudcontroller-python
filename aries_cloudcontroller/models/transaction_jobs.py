@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class TransactionJobs(BaseModel):
@@ -16,19 +15,12 @@ class TransactionJobs(BaseModel):
     Do not edit the class manually.
 
     TransactionJobs - a model defined in OpenAPI
-        transaction_my_job: My transaction related job [Optional].
-        transaction_their_job: Their transaction related job [Optional].
+
+        transaction_my_job: The transaction_my_job of this TransactionJobs [Optional].
+        transaction_their_job: The transaction_their_job of this TransactionJobs [Optional].
     """
 
-    transaction_my_job: Optional[
-        Literal["TRANSACTION_AUTHOR", "TRANSACTION_ENDORSER", "reset"]
-    ] = None
-    transaction_their_job: Optional[
-        Literal["TRANSACTION_AUTHOR", "TRANSACTION_ENDORSER", "reset"]
-    ] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    transaction_my_job: Optional[str] = Field(alias="transaction_my_job", default=None)
+    transaction_their_job: Optional[str] = Field(alias="transaction_their_job", default=None)
 
 TransactionJobs.update_forward_refs()

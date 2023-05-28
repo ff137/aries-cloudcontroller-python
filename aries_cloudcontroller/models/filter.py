@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class Filter(BaseModel):
@@ -16,35 +15,32 @@ class Filter(BaseModel):
     Do not edit the class manually.
 
     Filter - a model defined in OpenAPI
-        const: Const [Optional].
+
+        const: The const of this Filter [Optional].
         enum: The enum of this Filter [Optional].
-        exclusive_maximum: ExclusiveMaximum [Optional].
-        exclusive_minimum: ExclusiveMinimum [Optional].
-        format: Format [Optional].
-        max_length: Max Length [Optional].
-        maximum: Maximum [Optional].
-        min_length: Min Length [Optional].
-        minimum: Minimum [Optional].
-        not_: Not [Optional].
-        pattern: Pattern [Optional].
-        type: Type [Optional].
+        exclusive_maximum: The exclusive_maximum of this Filter [Optional].
+        exclusive_minimum: The exclusive_minimum of this Filter [Optional].
+        format: The format of this Filter [Optional].
+        max_length: The max_length of this Filter [Optional].
+        maximum: The maximum of this Filter [Optional].
+        min_length: The min_length of this Filter [Optional].
+        minimum: The minimum of this Filter [Optional].
+        _not: The _not of this Filter [Optional].
+        pattern: The pattern of this Filter [Optional].
+        type: The type of this Filter [Optional].
     """
 
-    const: Optional[Dict[str, Any]] = None
-    enum: Optional[List[Dict]] = None
-    exclusive_maximum: Optional[Dict[str, Any]] = Field(None, alias="exclusiveMaximum")
-    exclusive_minimum: Optional[Dict[str, Any]] = Field(None, alias="exclusiveMinimum")
-    format: Optional[str] = None
-    max_length: Optional[int] = Field(None, alias="maxLength")
-    maximum: Optional[Dict[str, Any]] = None
-    min_length: Optional[int] = Field(None, alias="minLength")
-    minimum: Optional[Dict[str, Any]] = None
-    not_: Optional[bool] = Field(None, alias="not")
-    pattern: Optional[str] = None
-    type: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    const: Optional[Dict[str, Any]] = Field(alias="const", default=None)
+    enum: Optional[List[object]] = Field(alias="enum", default=None)
+    exclusive_maximum: Optional[Dict[str, Any]] = Field(alias="exclusiveMaximum", default=None)
+    exclusive_minimum: Optional[Dict[str, Any]] = Field(alias="exclusiveMinimum", default=None)
+    format: Optional[str] = Field(alias="format", default=None)
+    max_length: Optional[int] = Field(alias="maxLength", default=None)
+    maximum: Optional[Dict[str, Any]] = Field(alias="maximum", default=None)
+    min_length: Optional[int] = Field(alias="minLength", default=None)
+    minimum: Optional[Dict[str, Any]] = Field(alias="minimum", default=None)
+    _not: Optional[bool] = Field(alias="not", default=None)
+    pattern: Optional[str] = Field(alias="pattern", default=None)
+    type: Optional[str] = Field(alias="type", default=None)
 
 Filter.update_forward_refs()

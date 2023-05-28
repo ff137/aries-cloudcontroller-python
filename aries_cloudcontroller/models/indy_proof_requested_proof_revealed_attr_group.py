@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.raw_encoded import RawEncoded
 
 
@@ -17,15 +16,12 @@ class IndyProofRequestedProofRevealedAttrGroup(BaseModel):
     Do not edit the class manually.
 
     IndyProofRequestedProofRevealedAttrGroup - a model defined in OpenAPI
-        sub_proof_index: Sub-proof index [Optional].
-        values: Indy proof requested proof revealed attr groups group value [Optional].
+
+        sub_proof_index: The sub_proof_index of this IndyProofRequestedProofRevealedAttrGroup [Optional].
+        values: The values of this IndyProofRequestedProofRevealedAttrGroup [Optional].
     """
 
-    sub_proof_index: Optional[int] = None
-    values: Optional[Dict[str, RawEncoded]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    sub_proof_index: Optional[int] = Field(alias="sub_proof_index", default=None)
+    values: Optional[Dict[str, RawEncoded]] = Field(alias="values", default=None)
 
 IndyProofRequestedProofRevealedAttrGroup.update_forward_refs()

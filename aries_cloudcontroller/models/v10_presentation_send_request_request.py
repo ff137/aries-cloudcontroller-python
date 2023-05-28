@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.indy_proof_request import IndyProofRequest
 
 
@@ -17,21 +16,18 @@ class V10PresentationSendRequestRequest(BaseModel):
     Do not edit the class manually.
 
     V10PresentationSendRequestRequest - a model defined in OpenAPI
-        connection_id: Connection identifier.
-        proof_request: The proof_request of this V10PresentationSendRequestRequest.
-        auto_verify: Verifier choice to auto-verify proof presentation [Optional].
+
+        auto_verify: The auto_verify of this V10PresentationSendRequestRequest [Optional].
         comment: The comment of this V10PresentationSendRequestRequest [Optional].
-        trace: Whether to trace event (default false) [Optional].
+        connection_id: The connection_id of this V10PresentationSendRequestRequest.
+        proof_request: The proof_request of this V10PresentationSendRequestRequest.
+        trace: The trace of this V10PresentationSendRequestRequest [Optional].
     """
 
-    connection_id: str
-    proof_request: IndyProofRequest
-    auto_verify: Optional[bool] = None
-    comment: Optional[str] = None
-    trace: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    auto_verify: Optional[bool] = Field(alias="auto_verify", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    connection_id: str = Field(alias="connection_id")
+    proof_request: IndyProofRequest = Field(alias="proof_request")
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
 V10PresentationSendRequestRequest.update_forward_refs()

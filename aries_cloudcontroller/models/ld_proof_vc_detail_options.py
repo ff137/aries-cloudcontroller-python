@@ -1,16 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.credential_status_options import (
-    CredentialStatusOptions,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.ld_proof_vc_detail_options_credential_status import LDProofVCDetailOptionsCredentialStatus
 
 
 class LDProofVCDetailOptions(BaseModel):
@@ -19,38 +16,25 @@ class LDProofVCDetailOptions(BaseModel):
     Do not edit the class manually.
 
     LDProofVCDetailOptions - a model defined in OpenAPI
-        proof_type: The proof type used for the proof. Should match suites registered in the Linked Data Cryptographic Suite Registry.
-        challenge: A challenge to include in the proof. SHOULD be provided by the requesting party of the credential (&#x3D;holder) [Optional].
-        created: The date and time of the proof (with a maximum accuracy in seconds). Defaults to current system time [Optional].
-        credential_status: The credential status mechanism to use for the credential. Omitting the property indicates the issued credential will not include a credential status [Optional].
-        domain: The intended domain of validity for the proof [Optional].
-        proof_purpose: The proof purpose used for the proof. Should match proof purposes registered in the Linked Data Proofs Specification [Optional].
+
+        challenge: The challenge of this LDProofVCDetailOptions [Optional].
+        created: The created of this LDProofVCDetailOptions [Optional].
+        credential_status: The credential_status of this LDProofVCDetailOptions [Optional].
+        domain: The domain of this LDProofVCDetailOptions [Optional].
+        proof_purpose: The proof_purpose of this LDProofVCDetailOptions [Optional].
+        proof_type: The proof_type of this LDProofVCDetailOptions.
     """
 
-    proof_type: str = Field(..., alias="proofType")
-    challenge: Optional[str] = None
-    created: Optional[str] = None
-    credential_status: Optional[CredentialStatusOptions] = Field(
-        None, alias="credentialStatus"
-    )
-    domain: Optional[str] = None
-    proof_purpose: Optional[str] = Field(None, alias="proofPurpose")
+    challenge: Optional[str] = Field(alias="challenge", default=None)
+    created: Optional[str] = Field(alias="created", default=None)
+    credential_status: Optional[LDProofVCDetailOptionsCredentialStatus] = Field(alias="credentialStatus", default=None)
+    domain: Optional[str] = Field(alias="domain", default=None)
+    proof_purpose: Optional[str] = Field(alias="proofPurpose", default=None)
+    proof_type: str = Field(alias="proofType")
 
     @validator("created")
     def created_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 LDProofVCDetailOptions.update_forward_refs()

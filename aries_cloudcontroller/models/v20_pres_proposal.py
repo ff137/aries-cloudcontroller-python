@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.attach_decorator import AttachDecorator
 from aries_cloudcontroller.models.v20_pres_format import V20PresFormat
 
@@ -18,21 +17,18 @@ class V20PresProposal(BaseModel):
     Do not edit the class manually.
 
     V20PresProposal - a model defined in OpenAPI
+
+        id: The id of this V20PresProposal [Optional].
+        type: The type of this V20PresProposal [Optional].
+        comment: The comment of this V20PresProposal [Optional].
         formats: The formats of this V20PresProposal.
-        proposalsattach: Attachment per acceptable format on corresponding identifier.
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        comment: Human-readable comment [Optional].
+        proposalsattach: The proposalsattach of this V20PresProposal.
     """
 
-    formats: List[V20PresFormat]
-    proposalsattach: List[AttachDecorator] = Field(..., alias="proposals~attach")
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    comment: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    formats: List[V20PresFormat] = Field(alias="formats")
+    proposalsattach: List[AttachDecorator] = Field(alias="proposals~attach")
 
 V20PresProposal.update_forward_refs()

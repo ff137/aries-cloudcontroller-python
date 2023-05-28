@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class IndyProofIdentifier(BaseModel):
@@ -16,80 +15,41 @@ class IndyProofIdentifier(BaseModel):
     Do not edit the class manually.
 
     IndyProofIdentifier - a model defined in OpenAPI
-        cred_def_id: Credential definition identifier [Optional].
-        rev_reg_id: Revocation registry identifier [Optional].
-        schema_id: Schema identifier [Optional].
-        timestamp: Timestamp epoch [Optional].
+
+        cred_def_id: The cred_def_id of this IndyProofIdentifier [Optional].
+        rev_reg_id: The rev_reg_id of this IndyProofIdentifier [Optional].
+        schema_id: The schema_id of this IndyProofIdentifier [Optional].
+        timestamp: The timestamp of this IndyProofIdentifier [Optional].
     """
 
-    cred_def_id: Optional[str] = None
-    rev_reg_id: Optional[str] = None
-    schema_id: Optional[str] = None
-    timestamp: Optional[int] = None
+    cred_def_id: Optional[str] = Field(alias="cred_def_id", default=None)
+    rev_reg_id: Optional[str] = Field(alias="rev_reg_id", default=None)
+    schema_id: Optional[str] = Field(alias="schema_id", default=None)
+    timestamp: Optional[int] = Field(alias="timestamp", default=None)
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("rev_reg_id")
     def rev_reg_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of rev_reg_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)", value)
         return value
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
 
     @validator("timestamp")
     def timestamp_max(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value > 18446744073709551615:
-            raise ValueError(
-                f"timestamp must be less than 18446744073709551615, currently {value}"
-            )
+        assert value <= -1
         return value
 
     @validator("timestamp")
     def timestamp_min(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value < 0:
-            raise ValueError(f"timestamp must be greater than 0, currently {value}")
+        assert value >= 0
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyProofIdentifier.update_forward_refs()

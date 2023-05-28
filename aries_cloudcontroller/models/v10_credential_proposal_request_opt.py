@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.credential_preview import CredentialPreview
 
 
@@ -17,98 +16,55 @@ class V10CredentialProposalRequestOpt(BaseModel):
     Do not edit the class manually.
 
     V10CredentialProposalRequestOpt - a model defined in OpenAPI
-        connection_id: Connection identifier.
-        auto_remove: Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting) [Optional].
-        comment: Human-readable comment [Optional].
-        cred_def_id: Credential definition identifier [Optional].
+
+        auto_remove: The auto_remove of this V10CredentialProposalRequestOpt [Optional].
+        comment: The comment of this V10CredentialProposalRequestOpt [Optional].
+        connection_id: The connection_id of this V10CredentialProposalRequestOpt.
+        cred_def_id: The cred_def_id of this V10CredentialProposalRequestOpt [Optional].
         credential_proposal: The credential_proposal of this V10CredentialProposalRequestOpt [Optional].
-        issuer_did: Credential issuer DID [Optional].
-        schema_id: Schema identifier [Optional].
-        schema_issuer_did: Schema issuer DID [Optional].
-        schema_name: Schema name [Optional].
-        schema_version: Schema version [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
+        issuer_did: The issuer_did of this V10CredentialProposalRequestOpt [Optional].
+        schema_id: The schema_id of this V10CredentialProposalRequestOpt [Optional].
+        schema_issuer_did: The schema_issuer_did of this V10CredentialProposalRequestOpt [Optional].
+        schema_name: The schema_name of this V10CredentialProposalRequestOpt [Optional].
+        schema_version: The schema_version of this V10CredentialProposalRequestOpt [Optional].
+        trace: The trace of this V10CredentialProposalRequestOpt [Optional].
     """
 
-    connection_id: str
-    auto_remove: Optional[bool] = None
-    comment: Optional[str] = None
-    cred_def_id: Optional[str] = None
-    credential_proposal: Optional[CredentialPreview] = None
-    issuer_did: Optional[str] = None
-    schema_id: Optional[str] = None
-    schema_issuer_did: Optional[str] = None
-    schema_name: Optional[str] = None
-    schema_version: Optional[str] = None
-    trace: Optional[bool] = None
+    auto_remove: Optional[bool] = Field(alias="auto_remove", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    connection_id: str = Field(alias="connection_id")
+    cred_def_id: Optional[str] = Field(alias="cred_def_id", default=None)
+    credential_proposal: Optional[CredentialPreview] = Field(alias="credential_proposal", default=None)
+    issuer_did: Optional[str] = Field(alias="issuer_did", default=None)
+    schema_id: Optional[str] = Field(alias="schema_id", default=None)
+    schema_issuer_did: Optional[str] = Field(alias="schema_issuer_did", default=None)
+    schema_name: Optional[str] = Field(alias="schema_name", default=None)
+    schema_version: Optional[str] = Field(alias="schema_version", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("issuer_did")
     def issuer_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of issuer_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
 
     @validator("schema_issuer_did")
     def schema_issuer_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_issuer_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("schema_version")
     def schema_version_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_version does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 V10CredentialProposalRequestOpt.update_forward_refs()

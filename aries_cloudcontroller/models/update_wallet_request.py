@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class UpdateWalletRequest(BaseModel):
@@ -16,19 +15,16 @@ class UpdateWalletRequest(BaseModel):
     Do not edit the class manually.
 
     UpdateWalletRequest - a model defined in OpenAPI
-        image_url: Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection. [Optional].
-        label: Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection. [Optional].
-        wallet_dispatch_type: Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets. [Optional].
-        wallet_webhook_urls: List of Webhook URLs associated with this subwallet [Optional].
+
+        image_url: The image_url of this UpdateWalletRequest [Optional].
+        label: The label of this UpdateWalletRequest [Optional].
+        wallet_dispatch_type: The wallet_dispatch_type of this UpdateWalletRequest [Optional].
+        wallet_webhook_urls: The wallet_webhook_urls of this UpdateWalletRequest [Optional].
     """
 
-    image_url: Optional[str] = None
-    label: Optional[str] = None
-    wallet_dispatch_type: Optional[Literal["default", "both", "base"]] = None
-    wallet_webhook_urls: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    image_url: Optional[str] = Field(alias="image_url", default=None)
+    label: Optional[str] = Field(alias="label", default=None)
+    wallet_dispatch_type: Optional[str] = Field(alias="wallet_dispatch_type", default=None)
+    wallet_webhook_urls: Optional[List[str]] = Field(alias="wallet_webhook_urls", default=None)
 
 UpdateWalletRequest.update_forward_refs()

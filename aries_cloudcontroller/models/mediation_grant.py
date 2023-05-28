@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class MediationGrant(BaseModel):
@@ -16,19 +15,16 @@ class MediationGrant(BaseModel):
     Do not edit the class manually.
 
     MediationGrant - a model defined in OpenAPI
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        endpoint: endpoint on which messages destined for the recipient are received. [Optional].
+
+        id: The id of this MediationGrant [Optional].
+        type: The type of this MediationGrant [Optional].
+        endpoint: The endpoint of this MediationGrant [Optional].
         routing_keys: The routing_keys of this MediationGrant [Optional].
     """
 
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    endpoint: Optional[str] = None
-    routing_keys: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    endpoint: Optional[str] = Field(alias="endpoint", default=None)
+    routing_keys: Optional[List[str]] = Field(alias="routing_keys", default=None)
 
 MediationGrant.update_forward_refs()

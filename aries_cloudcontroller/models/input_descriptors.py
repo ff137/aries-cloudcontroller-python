@@ -1,17 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.constraints import Constraints
-from aries_cloudcontroller.models.schemas_input_descriptor_filter import (
-    SchemasInputDescriptorFilter,
-)
+from aries_cloudcontroller.models.input_descriptors_schema import InputDescriptorsSchema
 
 
 class InputDescriptors(BaseModel):
@@ -20,25 +17,22 @@ class InputDescriptors(BaseModel):
     Do not edit the class manually.
 
     InputDescriptors - a model defined in OpenAPI
+
         constraints: The constraints of this InputDescriptors [Optional].
         group: The group of this InputDescriptors [Optional].
-        id: ID [Optional].
-        metadata: Metadata dictionary [Optional].
-        name: Name [Optional].
-        purpose: Purpose [Optional].
-        schema_: Accepts a list of schema or a dict containing filters like oneof_filter. [Optional].
+        id: The id of this InputDescriptors [Optional].
+        metadata: The metadata of this InputDescriptors [Optional].
+        name: The name of this InputDescriptors [Optional].
+        purpose: The purpose of this InputDescriptors [Optional].
+        schema: The schema of this InputDescriptors [Optional].
     """
 
-    constraints: Optional[Constraints] = None
-    group: Optional[List[str]] = None
-    id: Optional[str] = None
-    metadata: Optional[Dict[str, Any]] = None
-    name: Optional[str] = None
-    purpose: Optional[str] = None
-    schema_: Optional[SchemasInputDescriptorFilter] = Field(None, alias="schema")
-
-    class Config:
-        allow_population_by_field_name = True
-
+    constraints: Optional[Constraints] = Field(alias="constraints", default=None)
+    group: Optional[List[str]] = Field(alias="group", default=None)
+    id: Optional[str] = Field(alias="id", default=None)
+    metadata: Optional[Dict[str, Any]] = Field(alias="metadata", default=None)
+    name: Optional[str] = Field(alias="name", default=None)
+    purpose: Optional[str] = Field(alias="purpose", default=None)
+    schema: Optional[InputDescriptorsSchema] = Field(alias="schema", default=None)
 
 InputDescriptors.update_forward_refs()

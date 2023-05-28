@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class CredAttrSpec(BaseModel):
@@ -16,17 +15,14 @@ class CredAttrSpec(BaseModel):
     Do not edit the class manually.
 
     CredAttrSpec - a model defined in OpenAPI
-        name: Attribute name.
-        value: Attribute value: base64-encode if MIME type is present.
-        mime_type: MIME type: omit for (null) default [Optional].
+
+        mime_type: The mime_type of this CredAttrSpec [Optional].
+        name: The name of this CredAttrSpec.
+        value: The value of this CredAttrSpec.
     """
 
-    name: str
-    value: str
-    mime_type: Optional[str] = Field(None, alias="mime-type")
-
-    class Config:
-        allow_population_by_field_name = True
-
+    mime_type: Optional[str] = Field(alias="mime-type", default=None)
+    name: str = Field(alias="name")
+    value: str = Field(alias="value")
 
 CredAttrSpec.update_forward_refs()

@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.signature_options import SignatureOptions
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.signed_doc_proof import SignedDocProof
 
 
 class SignedDoc(BaseModel):
@@ -17,13 +16,10 @@ class SignedDoc(BaseModel):
     Do not edit the class manually.
 
     SignedDoc - a model defined in OpenAPI
-        proof: Linked data proof.
+
+        proof: The proof of this SignedDoc.
     """
 
-    proof: SignatureOptions
-
-    class Config:
-        allow_population_by_field_name = True
-
+    proof: SignedDocProof = Field(alias="proof")
 
 SignedDoc.update_forward_refs()

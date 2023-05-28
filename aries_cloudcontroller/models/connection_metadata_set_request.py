@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class ConnectionMetadataSetRequest(BaseModel):
@@ -16,13 +15,10 @@ class ConnectionMetadataSetRequest(BaseModel):
     Do not edit the class manually.
 
     ConnectionMetadataSetRequest - a model defined in OpenAPI
-        metadata: Dictionary of metadata to set for connection..
+
+        metadata: The metadata of this ConnectionMetadataSetRequest.
     """
 
-    metadata: Dict[str, Any]
-
-    class Config:
-        allow_population_by_field_name = True
-
+    metadata: Dict[str, Any] = Field(alias="metadata")
 
 ConnectionMetadataSetRequest.update_forward_refs()

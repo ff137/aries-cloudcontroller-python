@@ -1,17 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.credential import Credential
-from aries_cloudcontroller.models.ld_proof_vc_detail_options import (
-    LDProofVCDetailOptions,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.ld_proof_vc_detail_credential import LDProofVCDetailCredential
+from aries_cloudcontroller.models.ld_proof_vc_detail_options import LDProofVCDetailOptions
 
 
 class LDProofVCDetail(BaseModel):
@@ -20,15 +17,12 @@ class LDProofVCDetail(BaseModel):
     Do not edit the class manually.
 
     LDProofVCDetail - a model defined in OpenAPI
-        credential: Detail of the JSON-LD Credential to be issued.
-        options: Options for specifying how the linked data proof is created..
+
+        credential: The credential of this LDProofVCDetail.
+        options: The options of this LDProofVCDetail.
     """
 
-    credential: Credential
-    options: LDProofVCDetailOptions
-
-    class Config:
-        allow_population_by_field_name = True
-
+    credential: LDProofVCDetailCredential = Field(alias="credential")
+    options: LDProofVCDetailOptions = Field(alias="options")
 
 LDProofVCDetail.update_forward_refs()

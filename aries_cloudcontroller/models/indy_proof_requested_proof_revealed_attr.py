@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class IndyProofRequestedProofRevealedAttr(BaseModel):
@@ -16,30 +15,19 @@ class IndyProofRequestedProofRevealedAttr(BaseModel):
     Do not edit the class manually.
 
     IndyProofRequestedProofRevealedAttr - a model defined in OpenAPI
-        encoded: Encoded value [Optional].
-        raw: Raw value [Optional].
-        sub_proof_index: Sub-proof index [Optional].
+
+        encoded: The encoded of this IndyProofRequestedProofRevealedAttr [Optional].
+        raw: The raw of this IndyProofRequestedProofRevealedAttr [Optional].
+        sub_proof_index: The sub_proof_index of this IndyProofRequestedProofRevealedAttr [Optional].
     """
 
-    encoded: Optional[str] = None
-    raw: Optional[str] = None
-    sub_proof_index: Optional[int] = None
+    encoded: Optional[str] = Field(alias="encoded", default=None)
+    raw: Optional[str] = Field(alias="raw", default=None)
+    sub_proof_index: Optional[int] = Field(alias="sub_proof_index", default=None)
 
     @validator("encoded")
     def encoded_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^-?[0-9]*$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of encoded does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^-?[0-9]*$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyProofRequestedProofRevealedAttr.update_forward_refs()

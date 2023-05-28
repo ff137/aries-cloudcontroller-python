@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.aml_record import AMLRecord
 from aries_cloudcontroller.models.taa_acceptance import TAAAcceptance
 from aries_cloudcontroller.models.taa_record import TAARecord
@@ -19,19 +18,16 @@ class TAAInfo(BaseModel):
     Do not edit the class manually.
 
     TAAInfo - a model defined in OpenAPI
+
         aml_record: The aml_record of this TAAInfo [Optional].
         taa_accepted: The taa_accepted of this TAAInfo [Optional].
         taa_record: The taa_record of this TAAInfo [Optional].
         taa_required: The taa_required of this TAAInfo [Optional].
     """
 
-    aml_record: Optional[AMLRecord] = None
-    taa_accepted: Optional[TAAAcceptance] = None
-    taa_record: Optional[TAARecord] = None
-    taa_required: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    aml_record: Optional[AMLRecord] = Field(alias="aml_record", default=None)
+    taa_accepted: Optional[TAAAcceptance] = Field(alias="taa_accepted", default=None)
+    taa_record: Optional[TAARecord] = Field(alias="taa_record", default=None)
+    taa_required: Optional[bool] = Field(alias="taa_required", default=None)
 
 TAAInfo.update_forward_refs()

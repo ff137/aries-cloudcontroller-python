@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.v10_credential_exchange import V10CredentialExchange
 
 
@@ -17,13 +16,10 @@ class V10CredentialExchangeListResult(BaseModel):
     Do not edit the class manually.
 
     V10CredentialExchangeListResult - a model defined in OpenAPI
-        results: Aries#0036 v1.0 credential exchange records [Optional].
+
+        results: The results of this V10CredentialExchangeListResult [Optional].
     """
 
-    results: Optional[List[V10CredentialExchange]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    results: Optional[List[V10CredentialExchange]] = Field(alias="results", default=None)
 
 V10CredentialExchangeListResult.update_forward_refs()

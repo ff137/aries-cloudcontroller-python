@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.indy_pres_preview import IndyPresPreview
 
 
@@ -17,19 +16,16 @@ class PresentationProposal(BaseModel):
     Do not edit the class manually.
 
     PresentationProposal - a model defined in OpenAPI
+
+        id: The id of this PresentationProposal [Optional].
+        type: The type of this PresentationProposal [Optional].
+        comment: The comment of this PresentationProposal [Optional].
         presentation_proposal: The presentation_proposal of this PresentationProposal.
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        comment: Human-readable comment [Optional].
     """
 
-    presentation_proposal: IndyPresPreview
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    comment: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    presentation_proposal: IndyPresPreview = Field(alias="presentation_proposal")
 
 PresentationProposal.update_forward_refs()

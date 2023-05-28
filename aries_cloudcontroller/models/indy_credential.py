@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_attr_value import IndyAttrValue
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_credential_values_value import IndyCredentialValuesValue
 
 
 class IndyCredential(BaseModel):
@@ -17,58 +16,39 @@ class IndyCredential(BaseModel):
     Do not edit the class manually.
 
     IndyCredential - a model defined in OpenAPI
-        cred_def_id: Credential definition identifier.
-        schema_id: Schema identifier.
-        signature: Credential signature.
-        signature_correctness_proof: Credential signature correctness proof.
-        values: Credential attributes.
-        rev_reg: Revocation registry state [Optional].
-        rev_reg_id: Revocation registry identifier [Optional].
-        witness: Witness for revocation proof [Optional].
+
+        cred_def_id: The cred_def_id of this IndyCredential.
+        rev_reg: The rev_reg of this IndyCredential [Optional].
+        rev_reg_id: The rev_reg_id of this IndyCredential [Optional].
+        schema_id: The schema_id of this IndyCredential.
+        signature: The signature of this IndyCredential.
+        signature_correctness_proof: The signature_correctness_proof of this IndyCredential.
+        values: The values of this IndyCredential.
+        witness: The witness of this IndyCredential [Optional].
     """
 
-    cred_def_id: str
-    schema_id: str
-    signature: Dict[str, Any]
-    signature_correctness_proof: Dict[str, Any]
-    values: Dict[str, IndyAttrValue]
-    rev_reg: Optional[Dict[str, Any]] = None
-    rev_reg_id: Optional[str] = None
-    witness: Optional[Dict[str, Any]] = None
+    cred_def_id: str = Field(alias="cred_def_id")
+    rev_reg: Optional[Dict[str, Any]] = Field(alias="rev_reg", default=None)
+    rev_reg_id: Optional[str] = Field(alias="rev_reg_id", default=None)
+    schema_id: str = Field(alias="schema_id")
+    signature: Dict[str, Any] = Field(alias="signature")
+    signature_correctness_proof: Dict[str, Any] = Field(alias="signature_correctness_proof")
+    values: Dict[str, IndyCredentialValuesValue] = Field(alias="values")
+    witness: Optional[Dict[str, Any]] = Field(alias="witness", default=None)
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("rev_reg_id")
     def rev_reg_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of rev_reg_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)", value)
         return value
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyCredential.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class LedgerConfigInstance(BaseModel):
@@ -16,21 +15,18 @@ class LedgerConfigInstance(BaseModel):
     Do not edit the class manually.
 
     LedgerConfigInstance - a model defined in OpenAPI
-        genesis_file: genesis_file [Optional].
-        genesis_transactions: genesis_transactions [Optional].
-        genesis_url: genesis_url [Optional].
-        id: ledger_id [Optional].
-        is_production: is_production [Optional].
+
+        genesis_file: The genesis_file of this LedgerConfigInstance [Optional].
+        genesis_transactions: The genesis_transactions of this LedgerConfigInstance [Optional].
+        genesis_url: The genesis_url of this LedgerConfigInstance [Optional].
+        id: The id of this LedgerConfigInstance [Optional].
+        is_production: The is_production of this LedgerConfigInstance [Optional].
     """
 
-    genesis_file: Optional[str] = None
-    genesis_transactions: Optional[str] = None
-    genesis_url: Optional[str] = None
-    id: Optional[str] = None
-    is_production: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    genesis_file: Optional[str] = Field(alias="genesis_file", default=None)
+    genesis_transactions: Optional[str] = Field(alias="genesis_transactions", default=None)
+    genesis_url: Optional[str] = Field(alias="genesis_url", default=None)
+    id: Optional[str] = Field(alias="id", default=None)
+    is_production: Optional[bool] = Field(alias="is_production", default=None)
 
 LedgerConfigInstance.update_forward_refs()

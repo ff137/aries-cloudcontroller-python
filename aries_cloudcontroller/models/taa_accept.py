@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class TAAAccept(BaseModel):
@@ -16,17 +15,14 @@ class TAAAccept(BaseModel):
     Do not edit the class manually.
 
     TAAAccept - a model defined in OpenAPI
+
         mechanism: The mechanism of this TAAAccept [Optional].
         text: The text of this TAAAccept [Optional].
         version: The version of this TAAAccept [Optional].
     """
 
-    mechanism: Optional[str] = None
-    text: Optional[str] = None
-    version: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    mechanism: Optional[str] = Field(alias="mechanism", default=None)
+    text: Optional[str] = Field(alias="text", default=None)
+    version: Optional[str] = Field(alias="version", default=None)
 
 TAAAccept.update_forward_refs()

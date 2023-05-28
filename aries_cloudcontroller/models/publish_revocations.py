@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class PublishRevocations(BaseModel):
@@ -16,13 +15,10 @@ class PublishRevocations(BaseModel):
     Do not edit the class manually.
 
     PublishRevocations - a model defined in OpenAPI
-        rrid2crid: Credential revocation ids by revocation registry id [Optional].
+
+        rrid2crid: The rrid2crid of this PublishRevocations [Optional].
     """
 
-    rrid2crid: Optional[Dict[str, List[str]]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    rrid2crid: Optional[Dict[str, List[str]]] = Field(alias="rrid2crid", default=None)
 
 PublishRevocations.update_forward_refs()

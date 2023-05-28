@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class V20CredRequestRequest(BaseModel):
@@ -16,13 +15,10 @@ class V20CredRequestRequest(BaseModel):
     Do not edit the class manually.
 
     V20CredRequestRequest - a model defined in OpenAPI
-        holder_did: Holder DID to substitute for the credentialSubject.id [Optional].
+
+        holder_did: The holder_did of this V20CredRequestRequest [Optional].
     """
 
-    holder_did: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    holder_did: Optional[str] = Field(alias="holder_did", default=None)
 
 V20CredRequestRequest.update_forward_refs()

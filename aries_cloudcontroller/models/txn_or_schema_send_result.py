@@ -1,15 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.schema_send_result import SchemaSendResult
-from aries_cloudcontroller.models.transaction_record import TransactionRecord
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.txn_or_schema_send_result_sent import TxnOrSchemaSendResultSent
+from aries_cloudcontroller.models.txn_or_schema_send_result_txn import TxnOrSchemaSendResultTxn
 
 
 class TxnOrSchemaSendResult(BaseModel):
@@ -18,15 +17,12 @@ class TxnOrSchemaSendResult(BaseModel):
     Do not edit the class manually.
 
     TxnOrSchemaSendResult - a model defined in OpenAPI
-        sent: Content sent [Optional].
-        txn: Schema transaction to endorse [Optional].
+
+        sent: The sent of this TxnOrSchemaSendResult [Optional].
+        txn: The txn of this TxnOrSchemaSendResult [Optional].
     """
 
-    sent: Optional[SchemaSendResult] = None
-    txn: Optional[TransactionRecord] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    sent: Optional[TxnOrSchemaSendResultSent] = Field(alias="sent", default=None)
+    txn: Optional[TxnOrSchemaSendResultTxn] = Field(alias="txn", default=None)
 
 TxnOrSchemaSendResult.update_forward_refs()

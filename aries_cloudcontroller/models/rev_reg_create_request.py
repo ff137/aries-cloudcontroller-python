@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class RevRegCreateRequest(BaseModel):
@@ -16,48 +15,27 @@ class RevRegCreateRequest(BaseModel):
     Do not edit the class manually.
 
     RevRegCreateRequest - a model defined in OpenAPI
-        credential_definition_id: Credential definition identifier [Optional].
-        max_cred_num: Revocation registry size [Optional].
+
+        credential_definition_id: The credential_definition_id of this RevRegCreateRequest [Optional].
+        max_cred_num: The max_cred_num of this RevRegCreateRequest [Optional].
     """
 
-    credential_definition_id: Optional[str] = None
-    max_cred_num: Optional[int] = None
+    credential_definition_id: Optional[str] = Field(alias="credential_definition_id", default=None)
+    max_cred_num: Optional[int] = Field(alias="max_cred_num", default=None)
 
     @validator("credential_definition_id")
     def credential_definition_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of credential_definition_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("max_cred_num")
     def max_cred_num_max(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value > 32768:
-            raise ValueError(f"max_cred_num must be less than 32768, currently {value}")
+        assert value <= 32768
         return value
 
     @validator("max_cred_num")
     def max_cred_num_min(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        if value < 4:
-            raise ValueError(f"max_cred_num must be greater than 4, currently {value}")
+        assert value >= 4
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 RevRegCreateRequest.update_forward_refs()

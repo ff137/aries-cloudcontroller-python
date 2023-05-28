@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class CreateWalletRequest(BaseModel):
@@ -16,29 +15,26 @@ class CreateWalletRequest(BaseModel):
     Do not edit the class manually.
 
     CreateWalletRequest - a model defined in OpenAPI
-        image_url: Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection. [Optional].
-        key_management_mode: Key management method to use for this wallet. [Optional].
-        label: Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection. [Optional].
-        wallet_dispatch_type: Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets. [Optional].
-        wallet_key: Master key used for key derivation. [Optional].
-        wallet_key_derivation: Key derivation [Optional].
-        wallet_name: Wallet name [Optional].
-        wallet_type: Type of the wallet to create [Optional].
-        wallet_webhook_urls: List of Webhook URLs associated with this subwallet [Optional].
+
+        image_url: The image_url of this CreateWalletRequest [Optional].
+        key_management_mode: The key_management_mode of this CreateWalletRequest [Optional].
+        label: The label of this CreateWalletRequest [Optional].
+        wallet_dispatch_type: The wallet_dispatch_type of this CreateWalletRequest [Optional].
+        wallet_key: The wallet_key of this CreateWalletRequest [Optional].
+        wallet_key_derivation: The wallet_key_derivation of this CreateWalletRequest [Optional].
+        wallet_name: The wallet_name of this CreateWalletRequest [Optional].
+        wallet_type: The wallet_type of this CreateWalletRequest [Optional].
+        wallet_webhook_urls: The wallet_webhook_urls of this CreateWalletRequest [Optional].
     """
 
-    image_url: Optional[str] = None
-    key_management_mode: Optional[Literal["managed"]] = None
-    label: Optional[str] = None
-    wallet_dispatch_type: Optional[Literal["default", "both", "base"]] = None
-    wallet_key: Optional[str] = None
-    wallet_key_derivation: Optional[Literal["ARGON2I_MOD", "ARGON2I_INT", "RAW"]] = None
-    wallet_name: Optional[str] = None
-    wallet_type: Optional[Literal["askar", "in_memory", "indy"]] = None
-    wallet_webhook_urls: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    image_url: Optional[str] = Field(alias="image_url", default=None)
+    key_management_mode: Optional[str] = Field(alias="key_management_mode", default=None)
+    label: Optional[str] = Field(alias="label", default=None)
+    wallet_dispatch_type: Optional[str] = Field(alias="wallet_dispatch_type", default=None)
+    wallet_key: Optional[str] = Field(alias="wallet_key", default=None)
+    wallet_key_derivation: Optional[str] = Field(alias="wallet_key_derivation", default=None)
+    wallet_name: Optional[str] = Field(alias="wallet_name", default=None)
+    wallet_type: Optional[str] = Field(alias="wallet_type", default=None)
+    wallet_webhook_urls: Optional[List[str]] = Field(alias="wallet_webhook_urls", default=None)
 
 CreateWalletRequest.update_forward_refs()

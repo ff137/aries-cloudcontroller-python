@@ -1,16 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_proof_req_attr_spec_non_revoked import (
-    IndyProofReqAttrSpecNonRevoked,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_proof_req_attr_spec_non_revoked import IndyProofReqAttrSpecNonRevoked
 
 
 class IndyProofReqAttrSpec(BaseModel):
@@ -19,19 +16,16 @@ class IndyProofReqAttrSpec(BaseModel):
     Do not edit the class manually.
 
     IndyProofReqAttrSpec - a model defined in OpenAPI
-        name: Attribute name [Optional].
-        names: Attribute name group [Optional].
+
+        name: The name of this IndyProofReqAttrSpec [Optional].
+        names: The names of this IndyProofReqAttrSpec [Optional].
         non_revoked: The non_revoked of this IndyProofReqAttrSpec [Optional].
-        restrictions: If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::&lt;attribute-name&gt;::value where &lt;attribute-name&gt; represents a credential attribute name [Optional].
+        restrictions: The restrictions of this IndyProofReqAttrSpec [Optional].
     """
 
-    name: Optional[str] = None
-    names: Optional[List[str]] = None
-    non_revoked: Optional[IndyProofReqAttrSpecNonRevoked] = None
-    restrictions: Optional[List[Dict[str, str]]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    name: Optional[str] = Field(alias="name", default=None)
+    names: Optional[List[str]] = Field(alias="names", default=None)
+    non_revoked: Optional[IndyProofReqAttrSpecNonRevoked] = Field(alias="non_revoked", default=None)
+    restrictions: Optional[List[Dict[str, str]]] = Field(alias="restrictions", default=None)
 
 IndyProofReqAttrSpec.update_forward_refs()

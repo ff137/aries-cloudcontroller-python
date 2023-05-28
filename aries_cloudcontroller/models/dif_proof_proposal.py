@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.dif_options import DIFOptions
 from aries_cloudcontroller.models.input_descriptors import InputDescriptors
 
@@ -18,15 +17,12 @@ class DIFProofProposal(BaseModel):
     Do not edit the class manually.
 
     DIFProofProposal - a model defined in OpenAPI
+
         input_descriptors: The input_descriptors of this DIFProofProposal [Optional].
         options: The options of this DIFProofProposal [Optional].
     """
 
-    input_descriptors: Optional[List[InputDescriptors]] = None
-    options: Optional[DIFOptions] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    input_descriptors: Optional[List[InputDescriptors]] = Field(alias="input_descriptors", default=None)
+    options: Optional[DIFOptions] = Field(alias="options", default=None)
 
 DIFProofProposal.update_forward_refs()

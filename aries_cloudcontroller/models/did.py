@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class DID(BaseModel):
@@ -16,47 +15,28 @@ class DID(BaseModel):
     Do not edit the class manually.
 
     DID - a model defined in OpenAPI
-        did: DID of interest [Optional].
-        key_type: Key type associated with the DID [Optional].
-        method: Did method associated with the DID [Optional].
-        posture: Whether DID is current public DID, posted to ledger but not current public DID, or local to the wallet [Optional].
-        verkey: Public verification key [Optional].
+
+        did: The did of this DID [Optional].
+        key_type: The key_type of this DID [Optional].
+        method: The method of this DID [Optional].
+        posture: The posture of this DID [Optional].
+        verkey: The verkey of this DID [Optional].
     """
 
-    did: Optional[str] = None
-    key_type: Optional[Literal["ed25519", "bls12381g2"]] = None
-    method: Optional[Literal["sov", "key"]] = None
-    posture: Optional[Literal["public", "posted", "wallet_only"]] = None
-    verkey: Optional[str] = None
+    did: Optional[str] = Field(alias="did", default=None)
+    key_type: Optional[str] = Field(alias="key_type", default=None)
+    method: Optional[str] = Field(alias="method", default=None)
+    posture: Optional[str] = Field(alias="posture", default=None)
+    verkey: Optional[str] = Field(alias="verkey", default=None)
 
     @validator("did")
     def did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+=[a-zA-Z0-9_.:%-]*)*)(\\/[^#?]*)?([?][^#]*)?(\#.*)?$$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of did does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$|^did:([a-zA-Z0-9_]+):([a-zA-Z0-9_.%-]+(:[a-zA-Z0-9_.%-]+)*)((;[a-zA-Z0-9_.:%-]+&#x3D;[a-zA-Z0-9_.:%-]*)*)(\\/[^#?]*)?([?][^#]*)?(\#.*)?$$", value)
         return value
 
     @validator("verkey")
     def verkey_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = (
-            r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$"
-        )
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of verkey does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 DID.update_forward_refs()

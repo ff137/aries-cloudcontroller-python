@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.attach_decorator_data import AttachDecoratorData
 
 
@@ -17,38 +16,27 @@ class AttachDecorator(BaseModel):
     Do not edit the class manually.
 
     AttachDecorator - a model defined in OpenAPI
+
+        id: The id of this AttachDecorator [Optional].
+        byte_count: The byte_count of this AttachDecorator [Optional].
         data: The data of this AttachDecorator.
-        id: Attachment identifier [Optional].
-        byte_count: Byte count of data included by reference [Optional].
-        description: Human-readable description of content [Optional].
-        filename: File name [Optional].
-        lastmod_time: Hint regarding last modification datetime, in ISO-8601 format [Optional].
-        mime_type: MIME type [Optional].
+        description: The description of this AttachDecorator [Optional].
+        filename: The filename of this AttachDecorator [Optional].
+        lastmod_time: The lastmod_time of this AttachDecorator [Optional].
+        mime_type: The mime_type of this AttachDecorator [Optional].
     """
 
-    data: AttachDecoratorData
-    id: Optional[str] = Field(None, alias="@id")
-    byte_count: Optional[int] = None
-    description: Optional[str] = None
-    filename: Optional[str] = None
-    lastmod_time: Optional[str] = None
-    mime_type: Optional[str] = Field(None, alias="mime-type")
+    id: Optional[str] = Field(alias="@id", default=None)
+    byte_count: Optional[int] = Field(alias="byte_count", default=None)
+    data: AttachDecoratorData = Field(alias="data")
+    description: Optional[str] = Field(alias="description", default=None)
+    filename: Optional[str] = Field(alias="filename", default=None)
+    lastmod_time: Optional[str] = Field(alias="lastmod_time", default=None)
+    mime_type: Optional[str] = Field(alias="mime-type", default=None)
 
     @validator("lastmod_time")
     def lastmod_time_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of lastmod_time does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 AttachDecorator.update_forward_refs()

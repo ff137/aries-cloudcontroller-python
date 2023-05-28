@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class V20CredFilterIndy(BaseModel):
@@ -16,88 +15,45 @@ class V20CredFilterIndy(BaseModel):
     Do not edit the class manually.
 
     V20CredFilterIndy - a model defined in OpenAPI
-        cred_def_id: Credential definition identifier [Optional].
-        issuer_did: Credential issuer DID [Optional].
-        schema_id: Schema identifier [Optional].
-        schema_issuer_did: Schema issuer DID [Optional].
-        schema_name: Schema name [Optional].
-        schema_version: Schema version [Optional].
+
+        cred_def_id: The cred_def_id of this V20CredFilterIndy [Optional].
+        issuer_did: The issuer_did of this V20CredFilterIndy [Optional].
+        schema_id: The schema_id of this V20CredFilterIndy [Optional].
+        schema_issuer_did: The schema_issuer_did of this V20CredFilterIndy [Optional].
+        schema_name: The schema_name of this V20CredFilterIndy [Optional].
+        schema_version: The schema_version of this V20CredFilterIndy [Optional].
     """
 
-    cred_def_id: Optional[str] = None
-    issuer_did: Optional[str] = None
-    schema_id: Optional[str] = None
-    schema_issuer_did: Optional[str] = None
-    schema_name: Optional[str] = None
-    schema_version: Optional[str] = None
+    cred_def_id: Optional[str] = Field(alias="cred_def_id", default=None)
+    issuer_did: Optional[str] = Field(alias="issuer_did", default=None)
+    schema_id: Optional[str] = Field(alias="schema_id", default=None)
+    schema_issuer_did: Optional[str] = Field(alias="schema_issuer_did", default=None)
+    schema_name: Optional[str] = Field(alias="schema_name", default=None)
+    schema_version: Optional[str] = Field(alias="schema_version", default=None)
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("issuer_did")
     def issuer_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of issuer_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("schema_id")
     def schema_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+$", value)
         return value
 
     @validator("schema_issuer_did")
     def schema_issuer_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_issuer_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("schema_version")
     def schema_version_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of schema_version does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 V20CredFilterIndy.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class V10CredentialProblemReportRequest(BaseModel):
@@ -16,13 +15,10 @@ class V10CredentialProblemReportRequest(BaseModel):
     Do not edit the class manually.
 
     V10CredentialProblemReportRequest - a model defined in OpenAPI
+
         description: The description of this V10CredentialProblemReportRequest.
     """
 
-    description: str
-
-    class Config:
-        allow_population_by_field_name = True
-
+    description: str = Field(alias="description")
 
 V10CredentialProblemReportRequest.update_forward_refs()

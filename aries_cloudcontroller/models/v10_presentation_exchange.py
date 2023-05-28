@@ -1,17 +1,16 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_proof import IndyProof
-from aries_cloudcontroller.models.indy_proof_request import IndyProofRequest
-from aries_cloudcontroller.models.presentation_proposal import PresentationProposal
-from aries_cloudcontroller.models.presentation_request import PresentationRequest
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v10_presentation_exchange_presentation import V10PresentationExchangePresentation
+from aries_cloudcontroller.models.v10_presentation_exchange_presentation_proposal_dict import V10PresentationExchangePresentationProposalDict
+from aries_cloudcontroller.models.v10_presentation_exchange_presentation_request import V10PresentationExchangePresentationRequest
+from aries_cloudcontroller.models.v10_presentation_exchange_presentation_request_dict import V10PresentationExchangePresentationRequestDict
 
 
 class V10PresentationExchange(BaseModel):
@@ -20,73 +19,54 @@ class V10PresentationExchange(BaseModel):
     Do not edit the class manually.
 
     V10PresentationExchange - a model defined in OpenAPI
-        auto_present: Prover choice to auto-present proof as verifier requests [Optional].
-        auto_verify: Verifier choice to auto-verify proof presentation [Optional].
-        connection_id: Connection identifier [Optional].
-        created_at: Time of record creation [Optional].
-        error_msg: Error message [Optional].
-        initiator: Present-proof exchange initiator: self or external [Optional].
-        presentation: (Indy) presentation (also known as proof) [Optional].
-        presentation_exchange_id: Presentation exchange identifier [Optional].
-        presentation_proposal_dict: Presentation proposal message [Optional].
-        presentation_request: (Indy) presentation request (also known as proof request) [Optional].
-        presentation_request_dict: Presentation request message [Optional].
-        role: Present-proof exchange role: prover or verifier [Optional].
-        state: Present-proof exchange state [Optional].
-        thread_id: Thread identifier [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
-        updated_at: Time of last record update [Optional].
-        verified: Whether presentation is verified: true or false [Optional].
+
+        auto_present: The auto_present of this V10PresentationExchange [Optional].
+        auto_verify: The auto_verify of this V10PresentationExchange [Optional].
+        connection_id: The connection_id of this V10PresentationExchange [Optional].
+        created_at: The created_at of this V10PresentationExchange [Optional].
+        error_msg: The error_msg of this V10PresentationExchange [Optional].
+        initiator: The initiator of this V10PresentationExchange [Optional].
+        presentation: The presentation of this V10PresentationExchange [Optional].
+        presentation_exchange_id: The presentation_exchange_id of this V10PresentationExchange [Optional].
+        presentation_proposal_dict: The presentation_proposal_dict of this V10PresentationExchange [Optional].
+        presentation_request: The presentation_request of this V10PresentationExchange [Optional].
+        presentation_request_dict: The presentation_request_dict of this V10PresentationExchange [Optional].
+        role: The role of this V10PresentationExchange [Optional].
+        state: The state of this V10PresentationExchange [Optional].
+        thread_id: The thread_id of this V10PresentationExchange [Optional].
+        trace: The trace of this V10PresentationExchange [Optional].
+        updated_at: The updated_at of this V10PresentationExchange [Optional].
+        verified: The verified of this V10PresentationExchange [Optional].
         verified_msgs: The verified_msgs of this V10PresentationExchange [Optional].
     """
 
-    auto_present: Optional[bool] = None
-    auto_verify: Optional[bool] = None
-    connection_id: Optional[str] = None
-    created_at: Optional[str] = None
-    error_msg: Optional[str] = None
-    initiator: Optional[Literal["self", "external"]] = None
-    presentation: Optional[IndyProof] = None
-    presentation_exchange_id: Optional[str] = None
-    presentation_proposal_dict: Optional[PresentationProposal] = None
-    presentation_request: Optional[IndyProofRequest] = None
-    presentation_request_dict: Optional[PresentationRequest] = None
-    role: Optional[Literal["prover", "verifier"]] = None
-    state: Optional[str] = None
-    thread_id: Optional[str] = None
-    trace: Optional[bool] = None
-    updated_at: Optional[str] = None
-    verified: Optional[Literal["true", "false"]] = None
-    verified_msgs: Optional[List[str]] = None
+    auto_present: Optional[bool] = Field(alias="auto_present", default=None)
+    auto_verify: Optional[bool] = Field(alias="auto_verify", default=None)
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    error_msg: Optional[str] = Field(alias="error_msg", default=None)
+    initiator: Optional[str] = Field(alias="initiator", default=None)
+    presentation: Optional[V10PresentationExchangePresentation] = Field(alias="presentation", default=None)
+    presentation_exchange_id: Optional[str] = Field(alias="presentation_exchange_id", default=None)
+    presentation_proposal_dict: Optional[V10PresentationExchangePresentationProposalDict] = Field(alias="presentation_proposal_dict", default=None)
+    presentation_request: Optional[V10PresentationExchangePresentationRequest] = Field(alias="presentation_request", default=None)
+    presentation_request_dict: Optional[V10PresentationExchangePresentationRequestDict] = Field(alias="presentation_request_dict", default=None)
+    role: Optional[str] = Field(alias="role", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    thread_id: Optional[str] = Field(alias="thread_id", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
+    verified: Optional[str] = Field(alias="verified", default=None)
+    verified_msgs: Optional[List[str]] = Field(alias="verified_msgs", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 V10PresentationExchange.update_forward_refs()

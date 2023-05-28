@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.indy_rev_reg_def_value import IndyRevRegDefValue
 
 
@@ -17,58 +16,35 @@ class IndyRevRegDef(BaseModel):
     Do not edit the class manually.
 
     IndyRevRegDef - a model defined in OpenAPI
-        cred_def_id: Credential definition identifier [Optional].
-        id: Indy revocation registry identifier [Optional].
-        revoc_def_type: Revocation registry type (specify CL_ACCUM) [Optional].
-        tag: Revocation registry tag [Optional].
-        value: Revocation registry definition value [Optional].
-        ver: Version of revocation registry definition [Optional].
+
+        cred_def_id: The cred_def_id of this IndyRevRegDef [Optional].
+        id: The id of this IndyRevRegDef [Optional].
+        revoc_def_type: The revoc_def_type of this IndyRevRegDef [Optional].
+        tag: The tag of this IndyRevRegDef [Optional].
+        value: The value of this IndyRevRegDef [Optional].
+        ver: The ver of this IndyRevRegDef [Optional].
     """
 
-    cred_def_id: Optional[str] = Field(None, alias="credDefId")
-    id: Optional[str] = None
-    revoc_def_type: Optional[Literal["CL_ACCUM"]] = Field(None, alias="revocDefType")
-    tag: Optional[str] = None
-    value: Optional[IndyRevRegDefValue] = None
-    ver: Optional[str] = None
+    cred_def_id: Optional[str] = Field(alias="credDefId", default=None)
+    id: Optional[str] = Field(alias="id", default=None)
+    revoc_def_type: Optional[str] = Field(alias="revocDefType", default=None)
+    tag: Optional[str] = Field(alias="tag", default=None)
+    value: Optional[IndyRevRegDefValue] = Field(alias="value", default=None)
+    ver: Optional[str] = Field(alias="ver", default=None)
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
 
     @validator("id")
     def id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of id does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)", value)
         return value
 
     @validator("ver")
     def ver_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[0-9.]+$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of ver does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^[0-9.]+$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 IndyRevRegDef.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class ConnectionInvitation(BaseModel):
@@ -16,38 +15,29 @@ class ConnectionInvitation(BaseModel):
     Do not edit the class manually.
 
     ConnectionInvitation - a model defined in OpenAPI
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        did: DID for connection invitation [Optional].
-        image_url: Optional image URL for connection invitation [Optional].
-        label: Optional label for connection invitation [Optional].
-        recipient_keys: List of recipient keys [Optional].
-        routing_keys: List of routing keys [Optional].
-        service_endpoint: Service endpoint at which to reach this agent [Optional].
+
+        id: The id of this ConnectionInvitation [Optional].
+        type: The type of this ConnectionInvitation [Optional].
+        did: The did of this ConnectionInvitation [Optional].
+        image_url: The image_url of this ConnectionInvitation [Optional].
+        label: The label of this ConnectionInvitation [Optional].
+        recipient_keys: The recipient_keys of this ConnectionInvitation [Optional].
+        routing_keys: The routing_keys of this ConnectionInvitation [Optional].
+        service_endpoint: The service_endpoint of this ConnectionInvitation [Optional].
     """
 
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    did: Optional[str] = None
-    image_url: Optional[str] = Field(None, alias="imageUrl")
-    label: Optional[str] = None
-    recipient_keys: Optional[List[str]] = Field(None, alias="recipientKeys")
-    routing_keys: Optional[List[str]] = Field(None, alias="routingKeys")
-    service_endpoint: Optional[str] = Field(None, alias="serviceEndpoint")
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    did: Optional[str] = Field(alias="did", default=None)
+    image_url: Optional[str] = Field(alias="imageUrl", default=None)
+    label: Optional[str] = Field(alias="label", default=None)
+    recipient_keys: Optional[List[str]] = Field(alias="recipientKeys", default=None)
+    routing_keys: Optional[List[str]] = Field(alias="routingKeys", default=None)
+    service_endpoint: Optional[str] = Field(alias="serviceEndpoint", default=None)
 
     @validator("did")
     def did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of did does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 ConnectionInvitation.update_forward_refs()

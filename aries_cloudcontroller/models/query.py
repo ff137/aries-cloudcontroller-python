@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class Query(BaseModel):
@@ -16,19 +15,16 @@ class Query(BaseModel):
     Do not edit the class manually.
 
     Query - a model defined in OpenAPI
-        query: The query of this Query.
-        id: Message identifier [Optional].
-        type: Message type [Optional].
+
+        id: The id of this Query [Optional].
+        type: The type of this Query [Optional].
         comment: The comment of this Query [Optional].
+        query: The query of this Query.
     """
 
-    query: str
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    comment: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    query: str = Field(alias="query")
 
 Query.update_forward_refs()

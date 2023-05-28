@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class AttachDecoratorDataJWSHeader(BaseModel):
@@ -16,20 +15,15 @@ class AttachDecoratorDataJWSHeader(BaseModel):
     Do not edit the class manually.
 
     AttachDecoratorDataJWSHeader - a model defined in OpenAPI
-        kid: Key identifier, in W3C did:key or DID URL format.
+
+        kid: The kid of this AttachDecoratorDataJWSHeader.
     """
 
-    kid: str
+    kid: str = Field(alias="kid")
 
     @validator("kid")
     def kid_pattern(cls, value):
-        pattern = r"^did:(?:key:z[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+|sov:[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}(;.*)?(\?.*)?#.+)$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of kid does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^did:(?:key:z[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]+|sov:[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}(;.*)?(\?.*)?#.+)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 AttachDecoratorDataJWSHeader.update_forward_refs()

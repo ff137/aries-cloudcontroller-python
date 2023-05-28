@@ -1,16 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.v20_pres_request_by_format import (
-    V20PresRequestByFormat,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v20_pres_request_by_format import V20PresRequestByFormat
 
 
 class V20PresCreateRequestRequest(BaseModel):
@@ -19,19 +16,16 @@ class V20PresCreateRequestRequest(BaseModel):
     Do not edit the class manually.
 
     V20PresCreateRequestRequest - a model defined in OpenAPI
-        presentation_request: The presentation_request of this V20PresCreateRequestRequest.
-        auto_verify: Verifier choice to auto-verify proof presentation [Optional].
+
+        auto_verify: The auto_verify of this V20PresCreateRequestRequest [Optional].
         comment: The comment of this V20PresCreateRequestRequest [Optional].
-        trace: Whether to trace event (default false) [Optional].
+        presentation_request: The presentation_request of this V20PresCreateRequestRequest.
+        trace: The trace of this V20PresCreateRequestRequest [Optional].
     """
 
-    presentation_request: V20PresRequestByFormat
-    auto_verify: Optional[bool] = None
-    comment: Optional[str] = None
-    trace: Optional[bool] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    auto_verify: Optional[bool] = Field(alias="auto_verify", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    presentation_request: V20PresRequestByFormat = Field(alias="presentation_request")
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
 V20PresCreateRequestRequest.update_forward_refs()

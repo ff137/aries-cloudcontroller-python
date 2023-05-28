@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class ProtocolDescriptor(BaseModel):
@@ -16,15 +15,12 @@ class ProtocolDescriptor(BaseModel):
     Do not edit the class manually.
 
     ProtocolDescriptor - a model defined in OpenAPI
+
         pid: The pid of this ProtocolDescriptor.
-        roles: List of roles [Optional].
+        roles: The roles of this ProtocolDescriptor [Optional].
     """
 
-    pid: str
-    roles: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    pid: str = Field(alias="pid")
+    roles: Optional[List[str]] = Field(alias="roles", default=None)
 
 ProtocolDescriptor.update_forward_refs()

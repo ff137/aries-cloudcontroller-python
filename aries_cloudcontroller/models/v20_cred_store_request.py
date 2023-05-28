@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class V20CredStoreRequest(BaseModel):
@@ -16,13 +15,10 @@ class V20CredStoreRequest(BaseModel):
     Do not edit the class manually.
 
     V20CredStoreRequest - a model defined in OpenAPI
+
         credential_id: The credential_id of this V20CredStoreRequest [Optional].
     """
 
-    credential_id: Optional[str] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    credential_id: Optional[str] = Field(alias="credential_id", default=None)
 
 V20CredStoreRequest.update_forward_refs()

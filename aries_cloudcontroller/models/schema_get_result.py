@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.model_schema import ModelSchema
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.schema import Schema
 
 
 class SchemaGetResult(BaseModel):
@@ -17,13 +16,10 @@ class SchemaGetResult(BaseModel):
     Do not edit the class manually.
 
     SchemaGetResult - a model defined in OpenAPI
-        schema_: The schema_ of this SchemaGetResult [Optional].
+
+        schema: The schema of this SchemaGetResult [Optional].
     """
 
-    schema_: Optional[ModelSchema] = Field(None, alias="schema")
-
-    class Config:
-        allow_population_by_field_name = True
-
+    schema: Optional[Schema] = Field(alias="schema", default=None)
 
 SchemaGetResult.update_forward_refs()

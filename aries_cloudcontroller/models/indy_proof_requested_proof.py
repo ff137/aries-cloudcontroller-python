@@ -1,22 +1,15 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_proof_requested_proof_predicate import (
-    IndyProofRequestedProofPredicate,
-)
-from aries_cloudcontroller.models.indy_proof_requested_proof_revealed_attr import (
-    IndyProofRequestedProofRevealedAttr,
-)
-from aries_cloudcontroller.models.indy_proof_requested_proof_revealed_attr_group import (
-    IndyProofRequestedProofRevealedAttrGroup,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_proof_requested_proof_predicate import IndyProofRequestedProofPredicate
+from aries_cloudcontroller.models.indy_proof_requested_proof_revealed_attr import IndyProofRequestedProofRevealedAttr
+from aries_cloudcontroller.models.indy_proof_requested_proof_revealed_attr_group import IndyProofRequestedProofRevealedAttrGroup
 
 
 class IndyProofRequestedProof(BaseModel):
@@ -25,23 +18,18 @@ class IndyProofRequestedProof(BaseModel):
     Do not edit the class manually.
 
     IndyProofRequestedProof - a model defined in OpenAPI
-        predicates: Proof requested proof predicates. [Optional].
-        revealed_attr_groups: Proof requested proof revealed attribute groups [Optional].
-        revealed_attrs: Proof requested proof revealed attributes [Optional].
-        self_attested_attrs: Proof requested proof self-attested attributes [Optional].
-        unrevealed_attrs: Unrevealed attributes [Optional].
+
+        predicates: The predicates of this IndyProofRequestedProof [Optional].
+        revealed_attr_groups: The revealed_attr_groups of this IndyProofRequestedProof [Optional].
+        revealed_attrs: The revealed_attrs of this IndyProofRequestedProof [Optional].
+        self_attested_attrs: The self_attested_attrs of this IndyProofRequestedProof [Optional].
+        unrevealed_attrs: The unrevealed_attrs of this IndyProofRequestedProof [Optional].
     """
 
-    predicates: Optional[Dict[str, IndyProofRequestedProofPredicate]] = None
-    revealed_attr_groups: Optional[
-        Dict[str, IndyProofRequestedProofRevealedAttrGroup]
-    ] = None
-    revealed_attrs: Optional[Dict[str, IndyProofRequestedProofRevealedAttr]] = None
-    self_attested_attrs: Optional[Dict[str, Any]] = None
-    unrevealed_attrs: Optional[Dict[str, Any]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    predicates: Optional[Dict[str, IndyProofRequestedProofPredicate]] = Field(alias="predicates", default=None)
+    revealed_attr_groups: Optional[Dict[str, IndyProofRequestedProofRevealedAttrGroup]] = Field(alias="revealed_attr_groups", default=None)
+    revealed_attrs: Optional[Dict[str, IndyProofRequestedProofRevealedAttr]] = Field(alias="revealed_attrs", default=None)
+    self_attested_attrs: Optional[Dict[str, Any]] = Field(alias="self_attested_attrs", default=None)
+    unrevealed_attrs: Optional[Dict[str, Any]] = Field(alias="unrevealed_attrs", default=None)
 
 IndyProofRequestedProof.update_forward_refs()

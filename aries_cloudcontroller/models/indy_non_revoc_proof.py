@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class IndyNonRevocProof(BaseModel):
@@ -16,15 +15,12 @@ class IndyNonRevocProof(BaseModel):
     Do not edit the class manually.
 
     IndyNonRevocProof - a model defined in OpenAPI
+
         c_list: The c_list of this IndyNonRevocProof [Optional].
         x_list: The x_list of this IndyNonRevocProof [Optional].
     """
 
-    c_list: Optional[Dict[str, str]] = None
-    x_list: Optional[Dict[str, str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    c_list: Optional[Dict[str, str]] = Field(alias="c_list", default=None)
+    x_list: Optional[Dict[str, str]] = Field(alias="x_list", default=None)
 
 IndyNonRevocProof.update_forward_refs()

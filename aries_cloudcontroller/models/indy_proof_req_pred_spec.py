@@ -1,16 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_proof_req_pred_spec_non_revoked import (
-    IndyProofReqPredSpecNonRevoked,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_proof_req_pred_spec_non_revoked import IndyProofReqPredSpecNonRevoked
 
 
 class IndyProofReqPredSpec(BaseModel):
@@ -19,21 +16,18 @@ class IndyProofReqPredSpec(BaseModel):
     Do not edit the class manually.
 
     IndyProofReqPredSpec - a model defined in OpenAPI
-        name: Attribute name.
-        p_type: Predicate type ('<', '<=', '>=', or '>').
-        p_value: Threshold value.
+
+        name: The name of this IndyProofReqPredSpec.
         non_revoked: The non_revoked of this IndyProofReqPredSpec [Optional].
-        restrictions: If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::&lt;attribute-name&gt;::value where &lt;attribute-name&gt; represents a credential attribute name [Optional].
+        p_type: The p_type of this IndyProofReqPredSpec.
+        p_value: The p_value of this IndyProofReqPredSpec.
+        restrictions: The restrictions of this IndyProofReqPredSpec [Optional].
     """
 
-    name: str
-    p_type: Literal["<", "<=", ">=", ">"]
-    p_value: int
-    non_revoked: Optional[IndyProofReqPredSpecNonRevoked] = None
-    restrictions: Optional[List[Dict[str, str]]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    name: str = Field(alias="name")
+    non_revoked: Optional[IndyProofReqPredSpecNonRevoked] = Field(alias="non_revoked", default=None)
+    p_type: str = Field(alias="p_type")
+    p_value: int = Field(alias="p_value")
+    restrictions: Optional[List[Dict[str, str]]] = Field(alias="restrictions", default=None)
 
 IndyProofReqPredSpec.update_forward_refs()

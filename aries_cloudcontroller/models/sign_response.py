@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class SignResponse(BaseModel):
@@ -16,15 +15,12 @@ class SignResponse(BaseModel):
     Do not edit the class manually.
 
     SignResponse - a model defined in OpenAPI
-        error: Error text [Optional].
-        signed_doc: Signed document [Optional].
+
+        error: The error of this SignResponse [Optional].
+        signed_doc: The signed_doc of this SignResponse [Optional].
     """
 
-    error: Optional[str] = None
-    signed_doc: Optional[Dict[str, Any]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    error: Optional[str] = Field(alias="error", default=None)
+    signed_doc: Optional[Dict[str, Any]] = Field(alias="signed_doc", default=None)
 
 SignResponse.update_forward_refs()

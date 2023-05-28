@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.keylist_query_paginate import KeylistQueryPaginate
 
 
@@ -17,19 +16,16 @@ class KeylistQuery(BaseModel):
     Do not edit the class manually.
 
     KeylistQuery - a model defined in OpenAPI
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        filter: Query dictionary object [Optional].
-        paginate: Pagination info [Optional].
+
+        id: The id of this KeylistQuery [Optional].
+        type: The type of this KeylistQuery [Optional].
+        filter: The filter of this KeylistQuery [Optional].
+        paginate: The paginate of this KeylistQuery [Optional].
     """
 
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    filter: Optional[Dict[str, Any]] = None
-    paginate: Optional[KeylistQueryPaginate] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    filter: Optional[Dict[str, Any]] = Field(alias="filter", default=None)
+    paginate: Optional[KeylistQueryPaginate] = Field(alias="paginate", default=None)
 
 KeylistQuery.update_forward_refs()

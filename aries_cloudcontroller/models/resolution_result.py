@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class ResolutionResult(BaseModel):
@@ -16,15 +15,12 @@ class ResolutionResult(BaseModel):
     Do not edit the class manually.
 
     ResolutionResult - a model defined in OpenAPI
-        did_document: DID Document.
-        metadata: Resolution metadata.
+
+        did_document: The did_document of this ResolutionResult.
+        metadata: The metadata of this ResolutionResult.
     """
 
-    did_document: Dict[str, Any]
-    metadata: Dict[str, Any]
-
-    class Config:
-        allow_population_by_field_name = True
-
+    did_document: Dict[str, Any] = Field(alias="did_document")
+    metadata: Dict[str, Any] = Field(alias="metadata")
 
 ResolutionResult.update_forward_refs()

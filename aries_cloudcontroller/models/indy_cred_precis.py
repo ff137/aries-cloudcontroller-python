@@ -1,17 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.indy_cred_info import IndyCredInfo
-from aries_cloudcontroller.models.indy_non_revocation_interval import (
-    IndyNonRevocationInterval,
-)
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.indy_cred_precis_cred_info import IndyCredPrecisCredInfo
+from aries_cloudcontroller.models.indy_cred_precis_interval import IndyCredPrecisInterval
 
 
 class IndyCredPrecis(BaseModel):
@@ -20,17 +17,14 @@ class IndyCredPrecis(BaseModel):
     Do not edit the class manually.
 
     IndyCredPrecis - a model defined in OpenAPI
-        cred_info: Credential info [Optional].
-        interval: Non-revocation interval from presentation request [Optional].
+
+        cred_info: The cred_info of this IndyCredPrecis [Optional].
+        interval: The interval of this IndyCredPrecis [Optional].
         presentation_referents: The presentation_referents of this IndyCredPrecis [Optional].
     """
 
-    cred_info: Optional[IndyCredInfo] = None
-    interval: Optional[IndyNonRevocationInterval] = None
-    presentation_referents: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    cred_info: Optional[IndyCredPrecisCredInfo] = Field(alias="cred_info", default=None)
+    interval: Optional[IndyCredPrecisInterval] = Field(alias="interval", default=None)
+    presentation_referents: Optional[List[str]] = Field(alias="presentation_referents", default=None)
 
 IndyCredPrecis.update_forward_refs()

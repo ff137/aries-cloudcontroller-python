@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.v20_pres_ex_record import V20PresExRecord
 
 
@@ -17,13 +16,10 @@ class V20PresExRecordList(BaseModel):
     Do not edit the class manually.
 
     V20PresExRecordList - a model defined in OpenAPI
-        results: Presentation exchange records [Optional].
+
+        results: The results of this V20PresExRecordList [Optional].
     """
 
-    results: Optional[List[V20PresExRecord]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    results: Optional[List[V20PresExRecord]] = Field(alias="results", default=None)
 
 V20PresExRecordList.update_forward_refs()

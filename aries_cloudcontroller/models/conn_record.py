@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class ConnRecord(BaseModel):
@@ -16,118 +15,73 @@ class ConnRecord(BaseModel):
     Do not edit the class manually.
 
     ConnRecord - a model defined in OpenAPI
-        accept: Connection acceptance: manual or auto [Optional].
-        alias: Optional alias to apply to connection for later use [Optional].
-        connection_id: Connection identifier [Optional].
-        connection_protocol: Connection protocol used [Optional].
-        created_at: Time of record creation [Optional].
-        error_msg: Error message [Optional].
-        inbound_connection_id: Inbound routing connection id to use [Optional].
-        invitation_key: Public key for connection [Optional].
-        invitation_mode: Invitation mode [Optional].
-        invitation_msg_id: ID of out-of-band invitation message [Optional].
-        my_did: Our DID for connection [Optional].
-        request_id: Connection request identifier [Optional].
-        rfc23_state: State per RFC 23 [Optional].
-        routing_state: Routing state of connection [Optional].
-        state: Current record state [Optional].
-        their_did: Their DID for connection [Optional].
-        their_label: Their label for connection [Optional].
-        their_public_did: Other agent&#39;s public DID for connection [Optional].
-        their_role: Their role in the connection protocol [Optional].
-        updated_at: Time of last record update [Optional].
+
+        accept: The accept of this ConnRecord [Optional].
+        alias: The alias of this ConnRecord [Optional].
+        connection_id: The connection_id of this ConnRecord [Optional].
+        connection_protocol: The connection_protocol of this ConnRecord [Optional].
+        created_at: The created_at of this ConnRecord [Optional].
+        error_msg: The error_msg of this ConnRecord [Optional].
+        inbound_connection_id: The inbound_connection_id of this ConnRecord [Optional].
+        invitation_key: The invitation_key of this ConnRecord [Optional].
+        invitation_mode: The invitation_mode of this ConnRecord [Optional].
+        invitation_msg_id: The invitation_msg_id of this ConnRecord [Optional].
+        my_did: The my_did of this ConnRecord [Optional].
+        request_id: The request_id of this ConnRecord [Optional].
+        rfc23_state: The rfc23_state of this ConnRecord [Optional].
+        routing_state: The routing_state of this ConnRecord [Optional].
+        state: The state of this ConnRecord [Optional].
+        their_did: The their_did of this ConnRecord [Optional].
+        their_label: The their_label of this ConnRecord [Optional].
+        their_public_did: The their_public_did of this ConnRecord [Optional].
+        their_role: The their_role of this ConnRecord [Optional].
+        updated_at: The updated_at of this ConnRecord [Optional].
     """
 
-    accept: Optional[Literal["manual", "auto"]] = None
-    alias: Optional[str] = None
-    connection_id: Optional[str] = None
-    connection_protocol: Optional[Literal["connections/1.0", "didexchange/1.0"]] = None
-    created_at: Optional[str] = None
-    error_msg: Optional[str] = None
-    inbound_connection_id: Optional[str] = None
-    invitation_key: Optional[str] = None
-    invitation_mode: Optional[Literal["once", "multi", "static"]] = None
-    invitation_msg_id: Optional[str] = None
-    my_did: Optional[str] = None
-    request_id: Optional[str] = None
-    rfc23_state: Optional[str] = None
-    routing_state: Optional[Literal["none", "request", "active", "error"]] = None
-    state: Optional[str] = None
-    their_did: Optional[str] = None
-    their_label: Optional[str] = None
-    their_public_did: Optional[str] = None
-    their_role: Optional[Literal["invitee", "requester", "inviter", "responder"]] = None
-    updated_at: Optional[str] = None
+    accept: Optional[str] = Field(alias="accept", default=None)
+    alias: Optional[str] = Field(alias="alias", default=None)
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    connection_protocol: Optional[str] = Field(alias="connection_protocol", default=None)
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    error_msg: Optional[str] = Field(alias="error_msg", default=None)
+    inbound_connection_id: Optional[str] = Field(alias="inbound_connection_id", default=None)
+    invitation_key: Optional[str] = Field(alias="invitation_key", default=None)
+    invitation_mode: Optional[str] = Field(alias="invitation_mode", default=None)
+    invitation_msg_id: Optional[str] = Field(alias="invitation_msg_id", default=None)
+    my_did: Optional[str] = Field(alias="my_did", default=None)
+    request_id: Optional[str] = Field(alias="request_id", default=None)
+    rfc23_state: Optional[str] = Field(alias="rfc23_state", default=None)
+    routing_state: Optional[str] = Field(alias="routing_state", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    their_did: Optional[str] = Field(alias="their_did", default=None)
+    their_label: Optional[str] = Field(alias="their_label", default=None)
+    their_public_did: Optional[str] = Field(alias="their_public_did", default=None)
+    their_role: Optional[str] = Field(alias="their_role", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("invitation_key")
     def invitation_key_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = (
-            r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$"
-        )
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of invitation_key does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{43,44}$", value)
         return value
 
     @validator("my_did")
     def my_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of my_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("their_did")
     def their_did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of their_did does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 ConnRecord.update_forward_refs()

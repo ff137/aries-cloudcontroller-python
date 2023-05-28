@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class RevokeRequest(BaseModel):
@@ -16,81 +15,46 @@ class RevokeRequest(BaseModel):
     Do not edit the class manually.
 
     RevokeRequest - a model defined in OpenAPI
-        comment: Optional comment to include in revocation notification [Optional].
-        connection_id: Connection ID to which the revocation notification will be sent; required if notify is true [Optional].
-        cred_ex_id: Credential exchange identifier [Optional].
-        cred_rev_id: Credential revocation identifier [Optional].
-        notify: Send a notification to the credential recipient [Optional].
-        notify_version: Specify which version of the revocation notification should be sent [Optional].
-        publish: (True) publish revocation to ledger immediately, or (default, False) mark it pending [Optional].
-        rev_reg_id: Revocation registry identifier [Optional].
-        thread_id: Thread ID of the credential exchange message thread resulting in the credential now being revoked; required if notify is true [Optional].
+
+        comment: The comment of this RevokeRequest [Optional].
+        connection_id: The connection_id of this RevokeRequest [Optional].
+        cred_ex_id: The cred_ex_id of this RevokeRequest [Optional].
+        cred_rev_id: The cred_rev_id of this RevokeRequest [Optional].
+        notify: The notify of this RevokeRequest [Optional].
+        notify_version: The notify_version of this RevokeRequest [Optional].
+        publish: The publish of this RevokeRequest [Optional].
+        rev_reg_id: The rev_reg_id of this RevokeRequest [Optional].
+        thread_id: The thread_id of this RevokeRequest [Optional].
     """
 
-    comment: Optional[str] = None
-    connection_id: Optional[str] = None
-    cred_ex_id: Optional[str] = None
-    cred_rev_id: Optional[str] = None
-    notify: Optional[bool] = None
-    notify_version: Optional[Literal["v1_0", "v2_0"]] = None
-    publish: Optional[bool] = None
-    rev_reg_id: Optional[str] = None
-    thread_id: Optional[str] = None
+    comment: Optional[str] = Field(alias="comment", default=None)
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    cred_ex_id: Optional[str] = Field(alias="cred_ex_id", default=None)
+    cred_rev_id: Optional[str] = Field(alias="cred_rev_id", default=None)
+    notify: Optional[bool] = Field(alias="notify", default=None)
+    notify_version: Optional[str] = Field(alias="notify_version", default=None)
+    publish: Optional[bool] = Field(alias="publish", default=None)
+    rev_reg_id: Optional[str] = Field(alias="rev_reg_id", default=None)
+    thread_id: Optional[str] = Field(alias="thread_id", default=None)
 
     @validator("connection_id")
     def connection_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of connection_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", value)
         return value
 
     @validator("cred_ex_id")
     def cred_ex_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_ex_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", value)
         return value
 
     @validator("cred_rev_id")
     def cred_rev_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^[1-9][0-9]*$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_rev_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^[1-9][0-9]*$", value)
         return value
 
     @validator("rev_reg_id")
     def rev_reg_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of rev_reg_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 RevokeRequest.update_forward_refs()

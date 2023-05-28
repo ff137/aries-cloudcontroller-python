@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.attach_decorator import AttachDecorator
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.didx_request_did_doc_attach import DIDXRequestDidDocAttach
 
 
 class DIDXRequest(BaseModel):
@@ -17,32 +16,23 @@ class DIDXRequest(BaseModel):
     Do not edit the class manually.
 
     DIDXRequest - a model defined in OpenAPI
-        label: Label for DID exchange request.
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        did: DID of exchange [Optional].
-        did_docattach: As signed attachment, DID Doc associated with DID [Optional].
+
+        id: The id of this DIDXRequest [Optional].
+        type: The type of this DIDXRequest [Optional].
+        did: The did of this DIDXRequest [Optional].
+        did_docattach: The did_docattach of this DIDXRequest [Optional].
+        label: The label of this DIDXRequest.
     """
 
-    label: str
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    did: Optional[str] = None
-    did_docattach: Optional[AttachDecorator] = Field(None, alias="did_doc~attach")
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    did: Optional[str] = Field(alias="did", default=None)
+    did_docattach: Optional[DIDXRequestDidDocAttach] = Field(alias="did_doc~attach", default=None)
+    label: str = Field(alias="label")
 
     @validator("did")
     def did_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
-        if not re.match(pattern, value):
-            raise ValueError(f"Value of did does not match regex pattern ('{pattern}')")
+        assert value is not None and re.match(r"^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 DIDXRequest.update_forward_refs()

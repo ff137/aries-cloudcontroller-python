@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.invitation_message import InvitationMessage
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.invitation_record_invitation import InvitationRecordInvitation
 from aries_cloudcontroller.models.service_decorator import ServiceDecorator
 
 
@@ -18,69 +17,42 @@ class OobRecord(BaseModel):
     Do not edit the class manually.
 
     OobRecord - a model defined in OpenAPI
-        invi_msg_id: Invitation message identifier.
-        invitation: Out of band invitation message.
-        oob_id: Oob record identifier.
-        state: Out of band message exchange state.
-        attach_thread_id: Connection record identifier [Optional].
-        connection_id: Connection record identifier [Optional].
-        created_at: Time of record creation [Optional].
-        our_recipient_key: Recipient key used for oob invitation [Optional].
-        role: OOB Role [Optional].
+
+        attach_thread_id: The attach_thread_id of this OobRecord [Optional].
+        connection_id: The connection_id of this OobRecord [Optional].
+        created_at: The created_at of this OobRecord [Optional].
+        invi_msg_id: The invi_msg_id of this OobRecord.
+        invitation: The invitation of this OobRecord.
+        oob_id: The oob_id of this OobRecord.
+        our_recipient_key: The our_recipient_key of this OobRecord [Optional].
+        role: The role of this OobRecord [Optional].
+        state: The state of this OobRecord.
         their_service: The their_service of this OobRecord [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
-        updated_at: Time of last record update [Optional].
+        trace: The trace of this OobRecord [Optional].
+        updated_at: The updated_at of this OobRecord [Optional].
     """
 
-    invi_msg_id: str
-    invitation: InvitationMessage
-    oob_id: str
-    state: Literal[
-        "initial",
-        "prepare-response",
-        "await-response",
-        "reuse-not-accepted",
-        "reuse-accepted",
-        "done",
-        "deleted",
-    ]
-    attach_thread_id: Optional[str] = None
-    connection_id: Optional[str] = None
-    created_at: Optional[str] = None
-    our_recipient_key: Optional[str] = None
-    role: Optional[Literal["sender", "receiver"]] = None
-    their_service: Optional[ServiceDecorator] = None
-    trace: Optional[bool] = None
-    updated_at: Optional[str] = None
+    attach_thread_id: Optional[str] = Field(alias="attach_thread_id", default=None)
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    invi_msg_id: str = Field(alias="invi_msg_id")
+    invitation: InvitationRecordInvitation = Field(alias="invitation")
+    oob_id: str = Field(alias="oob_id")
+    our_recipient_key: Optional[str] = Field(alias="our_recipient_key", default=None)
+    role: Optional[str] = Field(alias="role", default=None)
+    state: str = Field(alias="state")
+    their_service: Optional[ServiceDecorator] = Field(alias="their_service", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 OobRecord.update_forward_refs()

@@ -1,19 +1,16 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.v20_pres import V20Pres
-from aries_cloudcontroller.models.v20_pres_ex_record_by_format import (
-    V20PresExRecordByFormat,
-)
-from aries_cloudcontroller.models.v20_pres_proposal import V20PresProposal
-from aries_cloudcontroller.models.v20_pres_request import V20PresRequest
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v20_pres_ex_record_by_format import V20PresExRecordByFormat
+from aries_cloudcontroller.models.v20_pres_ex_record_pres import V20PresExRecordPres
+from aries_cloudcontroller.models.v20_pres_ex_record_pres_proposal import V20PresExRecordPresProposal
+from aries_cloudcontroller.models.v20_pres_ex_record_pres_request import V20PresExRecordPresRequest
 
 
 class V20PresExRecord(BaseModel):
@@ -22,85 +19,54 @@ class V20PresExRecord(BaseModel):
     Do not edit the class manually.
 
     V20PresExRecord - a model defined in OpenAPI
-        auto_present: Prover choice to auto-present proof as verifier requests [Optional].
-        auto_verify: Verifier choice to auto-verify proof presentation [Optional].
-        by_format: Attachment content by format for proposal, request, and presentation [Optional].
-        connection_id: Connection identifier [Optional].
-        created_at: Time of record creation [Optional].
-        error_msg: Error message [Optional].
-        initiator: Present-proof exchange initiator: self or external [Optional].
-        pres: Presentation message [Optional].
-        pres_ex_id: Presentation exchange identifier [Optional].
-        pres_proposal: Presentation proposal message [Optional].
-        pres_request: Presentation request message [Optional].
-        role: Present-proof exchange role: prover or verifier [Optional].
-        state: Present-proof exchange state [Optional].
-        thread_id: Thread identifier [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
-        updated_at: Time of last record update [Optional].
-        verified: Whether presentation is verified: &#39;true&#39; or &#39;false&#39; [Optional].
+
+        auto_present: The auto_present of this V20PresExRecord [Optional].
+        auto_verify: The auto_verify of this V20PresExRecord [Optional].
+        by_format: The by_format of this V20PresExRecord [Optional].
+        connection_id: The connection_id of this V20PresExRecord [Optional].
+        created_at: The created_at of this V20PresExRecord [Optional].
+        error_msg: The error_msg of this V20PresExRecord [Optional].
+        initiator: The initiator of this V20PresExRecord [Optional].
+        pres: The pres of this V20PresExRecord [Optional].
+        pres_ex_id: The pres_ex_id of this V20PresExRecord [Optional].
+        pres_proposal: The pres_proposal of this V20PresExRecord [Optional].
+        pres_request: The pres_request of this V20PresExRecord [Optional].
+        role: The role of this V20PresExRecord [Optional].
+        state: The state of this V20PresExRecord [Optional].
+        thread_id: The thread_id of this V20PresExRecord [Optional].
+        trace: The trace of this V20PresExRecord [Optional].
+        updated_at: The updated_at of this V20PresExRecord [Optional].
+        verified: The verified of this V20PresExRecord [Optional].
         verified_msgs: The verified_msgs of this V20PresExRecord [Optional].
     """
 
-    auto_present: Optional[bool] = None
-    auto_verify: Optional[bool] = None
-    by_format: Optional[V20PresExRecordByFormat] = None
-    connection_id: Optional[str] = None
-    created_at: Optional[str] = None
-    error_msg: Optional[str] = None
-    initiator: Optional[Literal["self", "external"]] = None
-    pres: Optional[V20Pres] = None
-    pres_ex_id: Optional[str] = None
-    pres_proposal: Optional[V20PresProposal] = None
-    pres_request: Optional[V20PresRequest] = None
-    role: Optional[Literal["prover", "verifier"]] = None
-    state: Optional[
-        Literal[
-            "proposal-sent",
-            "proposal-received",
-            "request-sent",
-            "request-received",
-            "presentation-sent",
-            "presentation-received",
-            "done",
-            "abandoned",
-            "deleted",
-        ]
-    ] = None
-    thread_id: Optional[str] = None
-    trace: Optional[bool] = None
-    updated_at: Optional[str] = None
-    verified: Optional[Literal["true", "false"]] = None
-    verified_msgs: Optional[List[str]] = None
+    auto_present: Optional[bool] = Field(alias="auto_present", default=None)
+    auto_verify: Optional[bool] = Field(alias="auto_verify", default=None)
+    by_format: Optional[V20PresExRecordByFormat] = Field(alias="by_format", default=None)
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    error_msg: Optional[str] = Field(alias="error_msg", default=None)
+    initiator: Optional[str] = Field(alias="initiator", default=None)
+    pres: Optional[V20PresExRecordPres] = Field(alias="pres", default=None)
+    pres_ex_id: Optional[str] = Field(alias="pres_ex_id", default=None)
+    pres_proposal: Optional[V20PresExRecordPresProposal] = Field(alias="pres_proposal", default=None)
+    pres_request: Optional[V20PresExRecordPresRequest] = Field(alias="pres_request", default=None)
+    role: Optional[str] = Field(alias="role", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    thread_id: Optional[str] = Field(alias="thread_id", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
+    verified: Optional[str] = Field(alias="verified", default=None)
+    verified_msgs: Optional[List[str]] = Field(alias="verified_msgs", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 V20PresExRecord.update_forward_refs()

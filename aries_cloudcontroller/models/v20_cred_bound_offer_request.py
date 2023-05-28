@@ -1,15 +1,14 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.v20_cred_filter import V20CredFilter
-from aries_cloudcontroller.models.v20_cred_preview import V20CredPreview
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.v20_cred_bound_offer_request_counter_preview import V20CredBoundOfferRequestCounterPreview
+from aries_cloudcontroller.models.v20_cred_bound_offer_request_filter import V20CredBoundOfferRequestFilter
 
 
 class V20CredBoundOfferRequest(BaseModel):
@@ -18,15 +17,12 @@ class V20CredBoundOfferRequest(BaseModel):
     Do not edit the class manually.
 
     V20CredBoundOfferRequest - a model defined in OpenAPI
-        counter_preview: Optional content for counter-proposal [Optional].
-        filter: Credential specification criteria by format [Optional].
+
+        counter_preview: The counter_preview of this V20CredBoundOfferRequest [Optional].
+        filter: The filter of this V20CredBoundOfferRequest [Optional].
     """
 
-    counter_preview: Optional[V20CredPreview] = None
-    filter: Optional[V20CredFilter] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    counter_preview: Optional[V20CredBoundOfferRequestCounterPreview] = Field(alias="counter_preview", default=None)
+    filter: Optional[V20CredBoundOfferRequestFilter] = Field(alias="filter", default=None)
 
 V20CredBoundOfferRequest.update_forward_refs()

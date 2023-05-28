@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.credential_preview import CredentialPreview
 
 
@@ -17,34 +16,27 @@ class V10CredentialFreeOfferRequest(BaseModel):
     Do not edit the class manually.
 
     V10CredentialFreeOfferRequest - a model defined in OpenAPI
-        connection_id: Connection identifier.
-        cred_def_id: Credential definition identifier.
+
+        auto_issue: The auto_issue of this V10CredentialFreeOfferRequest [Optional].
+        auto_remove: The auto_remove of this V10CredentialFreeOfferRequest [Optional].
+        comment: The comment of this V10CredentialFreeOfferRequest [Optional].
+        connection_id: The connection_id of this V10CredentialFreeOfferRequest.
+        cred_def_id: The cred_def_id of this V10CredentialFreeOfferRequest.
         credential_preview: The credential_preview of this V10CredentialFreeOfferRequest.
-        auto_issue: Whether to respond automatically to credential requests, creating and issuing requested credentials [Optional].
-        auto_remove: Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting) [Optional].
-        comment: Human-readable comment [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
+        trace: The trace of this V10CredentialFreeOfferRequest [Optional].
     """
 
-    connection_id: str
-    cred_def_id: str
-    credential_preview: CredentialPreview
-    auto_issue: Optional[bool] = None
-    auto_remove: Optional[bool] = None
-    comment: Optional[str] = None
-    trace: Optional[bool] = None
+    auto_issue: Optional[bool] = Field(alias="auto_issue", default=None)
+    auto_remove: Optional[bool] = Field(alias="auto_remove", default=None)
+    comment: Optional[str] = Field(alias="comment", default=None)
+    connection_id: str = Field(alias="connection_id")
+    cred_def_id: str = Field(alias="cred_def_id")
+    credential_preview: CredentialPreview = Field(alias="credential_preview")
+    trace: Optional[bool] = Field(alias="trace", default=None)
 
     @validator("cred_def_id")
     def cred_def_id_pattern(cls, value):
-        pattern = r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of cred_def_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+)):(.+)?$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 V10CredentialFreeOfferRequest.update_forward_refs()

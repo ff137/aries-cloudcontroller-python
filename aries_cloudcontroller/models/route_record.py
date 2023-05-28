@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class RouteRecord(BaseModel):
@@ -16,53 +15,34 @@ class RouteRecord(BaseModel):
     Do not edit the class manually.
 
     RouteRecord - a model defined in OpenAPI
-        recipient_key: The recipient_key of this RouteRecord.
+
         connection_id: The connection_id of this RouteRecord [Optional].
-        created_at: Time of record creation [Optional].
+        created_at: The created_at of this RouteRecord [Optional].
+        recipient_key: The recipient_key of this RouteRecord.
         record_id: The record_id of this RouteRecord [Optional].
         role: The role of this RouteRecord [Optional].
-        state: Current record state [Optional].
-        updated_at: Time of last record update [Optional].
+        state: The state of this RouteRecord [Optional].
+        updated_at: The updated_at of this RouteRecord [Optional].
         wallet_id: The wallet_id of this RouteRecord [Optional].
     """
 
-    recipient_key: str
-    connection_id: Optional[str] = None
-    created_at: Optional[str] = None
-    record_id: Optional[str] = None
-    role: Optional[str] = None
-    state: Optional[str] = None
-    updated_at: Optional[str] = None
-    wallet_id: Optional[str] = None
+    connection_id: Optional[str] = Field(alias="connection_id", default=None)
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    recipient_key: str = Field(alias="recipient_key")
+    record_id: Optional[str] = Field(alias="record_id", default=None)
+    role: Optional[str] = Field(alias="role", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
+    wallet_id: Optional[str] = Field(alias="wallet_id", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 RouteRecord.update_forward_refs()

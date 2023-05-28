@@ -1,14 +1,13 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
-from aries_cloudcontroller.models.invitation_message import InvitationMessage
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from aries_cloudcontroller.models.invitation_record_invitation import InvitationRecordInvitation
 
 
 class InvitationRecord(BaseModel):
@@ -17,55 +16,36 @@ class InvitationRecord(BaseModel):
     Do not edit the class manually.
 
     InvitationRecord - a model defined in OpenAPI
-        created_at: Time of record creation [Optional].
-        invi_msg_id: Invitation message identifier [Optional].
-        invitation: Out of band invitation message [Optional].
-        invitation_id: Invitation record identifier [Optional].
-        invitation_url: Invitation message URL [Optional].
-        oob_id: Out of band record identifier [Optional].
-        state: Out of band message exchange state [Optional].
-        trace: Record trace information, based on agent configuration [Optional].
-        updated_at: Time of last record update [Optional].
+
+        created_at: The created_at of this InvitationRecord [Optional].
+        invi_msg_id: The invi_msg_id of this InvitationRecord [Optional].
+        invitation: The invitation of this InvitationRecord [Optional].
+        invitation_id: The invitation_id of this InvitationRecord [Optional].
+        invitation_url: The invitation_url of this InvitationRecord [Optional].
+        oob_id: The oob_id of this InvitationRecord [Optional].
+        state: The state of this InvitationRecord [Optional].
+        trace: The trace of this InvitationRecord [Optional].
+        updated_at: The updated_at of this InvitationRecord [Optional].
     """
 
-    created_at: Optional[str] = None
-    invi_msg_id: Optional[str] = None
-    invitation: Optional[InvitationMessage] = None
-    invitation_id: Optional[str] = None
-    invitation_url: Optional[str] = None
-    oob_id: Optional[str] = None
-    state: Optional[str] = None
-    trace: Optional[bool] = None
-    updated_at: Optional[str] = None
+    created_at: Optional[str] = Field(alias="created_at", default=None)
+    invi_msg_id: Optional[str] = Field(alias="invi_msg_id", default=None)
+    invitation: Optional[InvitationRecordInvitation] = Field(alias="invitation", default=None)
+    invitation_id: Optional[str] = Field(alias="invitation_id", default=None)
+    invitation_url: Optional[str] = Field(alias="invitation_url", default=None)
+    oob_id: Optional[str] = Field(alias="oob_id", default=None)
+    state: Optional[str] = Field(alias="state", default=None)
+    trace: Optional[bool] = Field(alias="trace", default=None)
+    updated_at: Optional[str] = Field(alias="updated_at", default=None)
 
     @validator("created_at")
     def created_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of created_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
 
     @validator("updated_at")
     def updated_at_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of updated_at does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"^\d{4}-\d\d-\d\d[T ]\d\d:\d\d(?:\:(?:\d\d(?:\.\d{1,6})?))?(?:[+-]\d\d:?\d\d|Z|)$", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 InvitationRecord.update_forward_refs()

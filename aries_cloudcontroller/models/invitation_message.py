@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.attach_decorator import AttachDecorator
 
 
@@ -17,29 +16,24 @@ class InvitationMessage(BaseModel):
     Do not edit the class manually.
 
     InvitationMessage - a model defined in OpenAPI
-        id: Message identifier [Optional].
-        type: Message type [Optional].
-        accept: List of mime type in order of preference [Optional].
+
+        id: The id of this InvitationMessage [Optional].
+        type: The type of this InvitationMessage [Optional].
+        accept: The accept of this InvitationMessage [Optional].
         handshake_protocols: The handshake_protocols of this InvitationMessage [Optional].
-        image_url: Optional image URL for out-of-band invitation [Optional].
-        label: Optional label [Optional].
-        requestsattach: Optional request attachment [Optional].
+        image_url: The image_url of this InvitationMessage [Optional].
+        label: The label of this InvitationMessage [Optional].
+        requestsattach: The requestsattach of this InvitationMessage [Optional].
         services: The services of this InvitationMessage [Optional].
     """
 
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    accept: Optional[List[str]] = None
-    handshake_protocols: Optional[List[str]] = None
-    image_url: Optional[str] = Field(None, alias="imageUrl")
-    label: Optional[str] = None
-    requestsattach: Optional[List[AttachDecorator]] = Field(
-        None, alias="requests~attach"
-    )
-    services: Optional[List[Union[Dict, str]]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    accept: Optional[List[str]] = Field(alias="accept", default=None)
+    handshake_protocols: Optional[List[str]] = Field(alias="handshake_protocols", default=None)
+    image_url: Optional[str] = Field(alias="imageUrl", default=None)
+    label: Optional[str] = Field(alias="label", default=None)
+    requestsattach: Optional[List[AttachDecorator]] = Field(alias="requests~attach", default=None)
+    services: Optional[List[object]] = Field(alias="services", default=None)
 
 InvitationMessage.update_forward_refs()

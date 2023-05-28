@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.indy_cred_info import IndyCredInfo
 
 
@@ -17,13 +16,10 @@ class CredInfoList(BaseModel):
     Do not edit the class manually.
 
     CredInfoList - a model defined in OpenAPI
+
         results: The results of this CredInfoList [Optional].
     """
 
-    results: Optional[List[IndyCredInfo]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    results: Optional[List[IndyCredInfo]] = Field(alias="results", default=None)
 
 CredInfoList.update_forward_refs()

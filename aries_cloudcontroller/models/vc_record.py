@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class VCRecord(BaseModel):
@@ -16,31 +15,28 @@ class VCRecord(BaseModel):
     Do not edit the class manually.
 
     VCRecord - a model defined in OpenAPI
+
         contexts: The contexts of this VCRecord [Optional].
         cred_tags: The cred_tags of this VCRecord [Optional].
-        cred_value: (JSON-serializable) credential value [Optional].
+        cred_value: The cred_value of this VCRecord [Optional].
         expanded_types: The expanded_types of this VCRecord [Optional].
-        given_id: Credential identifier [Optional].
-        issuer_id: Issuer identifier [Optional].
+        given_id: The given_id of this VCRecord [Optional].
+        issuer_id: The issuer_id of this VCRecord [Optional].
         proof_types: The proof_types of this VCRecord [Optional].
-        record_id: Record identifier [Optional].
+        record_id: The record_id of this VCRecord [Optional].
         schema_ids: The schema_ids of this VCRecord [Optional].
         subject_ids: The subject_ids of this VCRecord [Optional].
     """
 
-    contexts: Optional[List[str]] = None
-    cred_tags: Optional[Dict[str, str]] = None
-    cred_value: Optional[Dict[str, Any]] = None
-    expanded_types: Optional[List[str]] = None
-    given_id: Optional[str] = None
-    issuer_id: Optional[str] = None
-    proof_types: Optional[List[str]] = None
-    record_id: Optional[str] = None
-    schema_ids: Optional[List[str]] = None
-    subject_ids: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    contexts: Optional[List[str]] = Field(alias="contexts", default=None)
+    cred_tags: Optional[Dict[str, str]] = Field(alias="cred_tags", default=None)
+    cred_value: Optional[Dict[str, Any]] = Field(alias="cred_value", default=None)
+    expanded_types: Optional[List[str]] = Field(alias="expanded_types", default=None)
+    given_id: Optional[str] = Field(alias="given_id", default=None)
+    issuer_id: Optional[str] = Field(alias="issuer_id", default=None)
+    proof_types: Optional[List[str]] = Field(alias="proof_types", default=None)
+    record_id: Optional[str] = Field(alias="record_id", default=None)
+    schema_ids: Optional[List[str]] = Field(alias="schema_ids", default=None)
+    subject_ids: Optional[List[str]] = Field(alias="subject_ids", default=None)
 
 VCRecord.update_forward_refs()

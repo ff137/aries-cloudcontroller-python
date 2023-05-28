@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class IndyRevRegEntryValue(BaseModel):
@@ -16,17 +15,14 @@ class IndyRevRegEntryValue(BaseModel):
     Do not edit the class manually.
 
     IndyRevRegEntryValue - a model defined in OpenAPI
-        accum: Accumulator value [Optional].
-        prev_accum: Previous accumulator value [Optional].
-        revoked: Revoked credential revocation identifiers [Optional].
+
+        accum: The accum of this IndyRevRegEntryValue [Optional].
+        prev_accum: The prev_accum of this IndyRevRegEntryValue [Optional].
+        revoked: The revoked of this IndyRevRegEntryValue [Optional].
     """
 
-    accum: Optional[str] = None
-    prev_accum: Optional[str] = Field(None, alias="prevAccum")
-    revoked: Optional[List[int]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    accum: Optional[str] = Field(alias="accum", default=None)
+    prev_accum: Optional[str] = Field(alias="prevAccum", default=None)
+    revoked: Optional[List[int]] = Field(alias="revoked", default=None)
 
 IndyRevRegEntryValue.update_forward_refs()

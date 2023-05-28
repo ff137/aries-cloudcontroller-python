@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 from aries_cloudcontroller.models.attachment_def import AttachmentDef
 
 
@@ -17,42 +16,31 @@ class InvitationCreateRequest(BaseModel):
     Do not edit the class manually.
 
     InvitationCreateRequest - a model defined in OpenAPI
-        accept: List of mime type in order of preference that should be use in responding to the message [Optional].
-        alias: Alias for connection [Optional].
-        attachments: Optional invitation attachments [Optional].
+
+        accept: The accept of this InvitationCreateRequest [Optional].
+        alias: The alias of this InvitationCreateRequest [Optional].
+        attachments: The attachments of this InvitationCreateRequest [Optional].
         handshake_protocols: The handshake_protocols of this InvitationCreateRequest [Optional].
-        mediation_id: Identifier for active mediation record to be used [Optional].
-        metadata: Optional metadata to attach to the connection created with the invitation [Optional].
-        my_label: Label for connection invitation [Optional].
-        protocol_version: OOB protocol version [Optional].
-        use_public_did: Whether to use public DID in invitation [Optional].
+        mediation_id: The mediation_id of this InvitationCreateRequest [Optional].
+        metadata: The metadata of this InvitationCreateRequest [Optional].
+        my_label: The my_label of this InvitationCreateRequest [Optional].
+        protocol_version: The protocol_version of this InvitationCreateRequest [Optional].
+        use_public_did: The use_public_did of this InvitationCreateRequest [Optional].
     """
 
-    accept: Optional[List[str]] = None
-    alias: Optional[str] = None
-    attachments: Optional[List[AttachmentDef]] = None
-    handshake_protocols: Optional[List[str]] = None
-    mediation_id: Optional[str] = None
-    metadata: Optional[Dict[str, Any]] = None
-    my_label: Optional[str] = None
-    protocol_version: Optional[str] = None
-    use_public_did: Optional[bool] = None
+    accept: Optional[List[str]] = Field(alias="accept", default=None)
+    alias: Optional[str] = Field(alias="alias", default=None)
+    attachments: Optional[List[AttachmentDef]] = Field(alias="attachments", default=None)
+    handshake_protocols: Optional[List[str]] = Field(alias="handshake_protocols", default=None)
+    mediation_id: Optional[str] = Field(alias="mediation_id", default=None)
+    metadata: Optional[Dict[str, Any]] = Field(alias="metadata", default=None)
+    my_label: Optional[str] = Field(alias="my_label", default=None)
+    protocol_version: Optional[str] = Field(alias="protocol_version", default=None)
+    use_public_did: Optional[bool] = Field(alias="use_public_did", default=None)
 
     @validator("mediation_id")
     def mediation_id_pattern(cls, value):
-        # Property is optional
-        if value is None:
-            return
-
-        pattern = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
-        if not re.match(pattern, value):
-            raise ValueError(
-                f"Value of mediation_id does not match regex pattern ('{pattern}')"
-            )
+        assert value is not None and re.match(r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-4[a-fA-F0-9]{3}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}", value)
         return value
-
-    class Config:
-        allow_population_by_field_name = True
-
 
 InvitationCreateRequest.update_forward_refs()

@@ -1,13 +1,12 @@
 # coding: utf-8
 
 from __future__ import annotations
-
 from datetime import date, datetime  # noqa: F401
 
 import re  # noqa: F401
-from typing import Any, Dict, List, Optional, Union, Literal  # noqa: F401
+from typing import Any, Dict, List, Optional  # noqa: F401
 
-from pydantic import AnyUrl, BaseModel, EmailStr, validator, Field, Extra  # noqa: F401
+from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
 
 
 class MediationDeny(BaseModel):
@@ -16,19 +15,16 @@ class MediationDeny(BaseModel):
     Do not edit the class manually.
 
     MediationDeny - a model defined in OpenAPI
-        id: Message identifier [Optional].
-        type: Message type [Optional].
+
+        id: The id of this MediationDeny [Optional].
+        type: The type of this MediationDeny [Optional].
         mediator_terms: The mediator_terms of this MediationDeny [Optional].
         recipient_terms: The recipient_terms of this MediationDeny [Optional].
     """
 
-    id: Optional[str] = Field(None, alias="@id")
-    type: Optional[str] = Field(None, alias="@type")
-    mediator_terms: Optional[List[str]] = None
-    recipient_terms: Optional[List[str]] = None
-
-    class Config:
-        allow_population_by_field_name = True
-
+    id: Optional[str] = Field(alias="@id", default=None)
+    type: Optional[str] = Field(alias="@type", default=None)
+    mediator_terms: Optional[List[str]] = Field(alias="mediator_terms", default=None)
+    recipient_terms: Optional[List[str]] = Field(alias="recipient_terms", default=None)
 
 MediationDeny.update_forward_refs()
